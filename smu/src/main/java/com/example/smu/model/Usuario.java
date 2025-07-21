@@ -33,7 +33,7 @@ public class Usuario {
     Integer id;
 
     String nome;
-    
+
     @Column(unique = true)
     String email;
     String senha;
@@ -47,6 +47,7 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
     // monitoria 
     @ManyToMany
     @JoinTable(
@@ -55,6 +56,7 @@ public class Usuario {
         inverseJoinColumns = @JoinColumn(name="monitoria_id")
     )
     Set<Monitoria> monitorias;
+
     // disciplina
 
     @ManyToMany
@@ -65,7 +67,9 @@ public class Usuario {
     )
     Set<Disciplina> disciplinas;
 
+    // sessão
 
+    
 
 
 
