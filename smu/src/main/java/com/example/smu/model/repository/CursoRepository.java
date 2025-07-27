@@ -1,9 +1,63 @@
 package com.example.smu.model.repository;
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.smu.model.Curso;
+import com.example.smu.model.Dto.AlunoCursoDto;
 
-public interface  CursoRepository extends JpaRepository<Integer, Curso> {
+import java.util.List;
+
+import com.example.smu.model.Dto.DisciplinaCursoDto;
+import com.example.smu.model.Dto.MonitoriaCurso;
+
+
+public interface  CursoRepository extends JpaRepository<Curso,Integer> {
     
+    Optional<Curso> findBynome (String nome);
+    Optional<Curso> findById (Integer id);
+    boolean existsByName(String nome);
+    boolean existsById(Integer id);
+    // sql
+
+    // listar alunos n0 curso
+    @Query("""
+    SELECT com.example.smu.model.Dto.AlunoCursoDto(
+    c.id,
+    a.id,
+    a.nome
+    )
+    FROM Curso c
+    JOIN Usuario a ON a.curso.id = c.id
+    WHERE c.id =: cursoid
+    """) List<AlunoCursoDto> AlunosPorCurso (@Param("cursoid") Integer cursoid);
+
+    // listar disciplinas no curso
+    @Query("""
+    SELECT com.example.smu.model.Dto.DisciplinaCursoDto(
+    c.id,
+    d.id,
+    d.nome
+    )
+    FROM Curso c
+    JOIN Disciplina d ON d.curso.id = c.id
+    WHERE c.id =: cursoid
+    """) List<DisciplinaCursoDto> DisciplinasPorCurso(@Param("cursoid") Integer cursoid);
+
+    // lista de monitorias disponiveis
+    @Query("""
+    SELECT com.example.smu.model.Dto.MonitoriaCurso(
+    c.id,
+    m.id,
+    m.nome
+    )
+    FROM Curso c
+    JOIN Monitoria m ON m.curso.id = c.id
+    WHERE c.id =: cursoid
+    """) List<MonitoriaCurso> monitoriaPorCurso(@Param("cursoid") Integer cursoid);
+
 }

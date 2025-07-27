@@ -34,7 +34,7 @@ public class Usuario {
 
     String nome;
 
-    @Column(unique = true)
+    //@Column(unique = true)
     String email;
     String senha;
     LocalDateTime dataNascimento;
@@ -68,8 +68,13 @@ public class Usuario {
     Set<Disciplina> disciplinas;
 
     // sessão
-
-    
+    @ManyToMany
+    @JoinTable(
+        name= "usuario_sessao",
+        joinColumns = @JoinColumn(name="usuario_id"),
+        inverseJoinColumns= @JoinColumn(name= "sessao_id")
+    )
+    Set<Sessao> sessoes;
 
 
 

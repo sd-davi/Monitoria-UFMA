@@ -53,7 +53,7 @@ public class Monitoria {
     Usuario monitor;
 
     // aluno
-    @ManyToMany(mappedBy="monitoriaas")
+    @ManyToMany(mappedBy="monitorias")
     Set <Usuario> alunos;
 
     
