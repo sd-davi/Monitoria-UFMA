@@ -22,7 +22,7 @@ public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer>
 
     // listar alunos na disciplina
     @Query("""
-    SELECT com.example.smu.model.Dto.DisciplinaAluno(
+    SELECT new com.example.smu.model.Dto.DisciplinaAluno(
     a.id,
     a.nome,
     d.id,
@@ -35,7 +35,7 @@ public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer>
 
     // lista de monitorias disponiveis
     @Query("""
-    SELECT com.example.smu.model.Dto.DisciplinaMonitoria(
+    SELECT new com.example.smu.model.Dto.DisciplinaMonitoria(
     d.id,
     m.id,
     m.nome

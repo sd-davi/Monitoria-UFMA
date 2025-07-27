@@ -26,7 +26,7 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
 
     // listar alunos n0 curso
     @Query("""
-    SELECT com.example.smu.model.Dto.AlunoCursoDto(
+    SELECT new com.example.smu.model.Dto.AlunoCursoDto(
     c.id,
     a.id,
     a.nome
@@ -38,7 +38,7 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
 
     // listar disciplinas no curso
     @Query("""
-    SELECT com.example.smu.model.Dto.DisciplinaCursoDto(
+    SELECT new com.example.smu.model.Dto.DisciplinaCursoDto(
     c.id,
     d.id,
     d.nome
@@ -50,7 +50,7 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
 
     // lista de monitorias disponiveis
     @Query("""
-    SELECT com.example.smu.model.Dto.MonitoriaCurso(
+    SELECT new com.example.smu.model.Dto.MonitoriaCurso(
     c.id,
     m.id,
     m.nome

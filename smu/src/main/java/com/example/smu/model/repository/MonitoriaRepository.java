@@ -21,7 +21,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
 
     // lista de alunos na monitoria
     @Query("""
-    SELECT com.example.smu.model.Dto.MonitoriaAlunoDto(
+    SELECT new com.example.smu.model.Dto.MonitoriaAlunoDto(
     a.id,
     a.nome,
     m.id,
@@ -36,7 +36,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
 
     // lista de materiais na monitoria  MonitoriaMaterialDto
     @Query("""
-    SELECT com.example.smu.model.Dto.MonitoriaMaterialDto(
+    SELECT new com.example.smu.model.Dto.MonitoriaMaterialDto(
     mt.id,
     mt.nome,
     m.id,
@@ -49,7 +49,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
 
     // listar as sessões MonitoriaSessaoDto
     @Query("""
-    SELECT com.example.smu.model.Dto.MonitoriaSessaoDto(
+    SELECT new com.example.smu.model.Dto.MonitoriaSessaoDto(
     s.id,
     m.id,
     m.nome
