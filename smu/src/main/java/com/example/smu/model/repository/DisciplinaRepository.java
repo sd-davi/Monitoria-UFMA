@@ -1,14 +1,20 @@
 package com.example.smu.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.example.smu.model.Disciplina;
 import com.example.smu.model.Dto.AlunoCursoDto;
 import com.example.smu.model.Dto.MonitoriaCurso;
 
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import java.util.List;
+
+import com.example.smu.model.Dto.DisciplinaAluno;
+import com.example.smu.model.Dto.DisciplinaMonitoria;
 
 
 public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer> {
@@ -31,7 +37,7 @@ public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer>
     FROM Disciplina d
     JOIN d.alunos a
     WHERE d.id =: disciplinaid
-    """) List<AlunoCursoDto> AlunosPorDisciplina (@Param("disciplinaid") Integer disciplinaid);
+    """) List<DisciplinaAluno> AlunosPorDisciplina (@Param("disciplinaid") Integer disciplinaid);
 
     // lista de monitorias disponiveis
     @Query("""
@@ -43,9 +49,8 @@ public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer>
     FROM Disciplina d
     JOIN Monitoria m ON m.disciplina.id = d.id
     WHERE d.id =: disciplinaid
-    """) List<MonitoriaCurso> monitoriaPorDisciplina(@Param("disciplinaid") Integer disciplinaid);
+    """) List<DisciplinaMonitoria> monitoriaPorDisciplina(@Param("disciplinaid") Integer disciplinaid);
 
-    // lista de alunos na monitoria
 
     
 }

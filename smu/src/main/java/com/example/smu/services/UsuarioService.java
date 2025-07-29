@@ -9,9 +9,12 @@ import com.example.smu.model.Dto.DisciplinaAluno;
 import com.example.smu.model.Dto.MonitoriaAlunoDto;
 import com.example.smu.model.Dto.MonitoriaMonitorDto;
 import com.example.smu.model.Curso;
+import com.example.smu.model.Monitoria;
 import com.example.smu.model.TipoUsuario;
 import com.example.smu.model.Usuario;
+import com.example.smu.model.repository.MonitoriaRepository;
 import com.example.smu.model.repository.UsuarioRepository;
+import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +24,8 @@ public class UsuarioService {
     
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    MonitoriaRepository monitoriaRepository;
 
     // salvar
     @Transactional // so salva apos o final (para evitar dados incosistentes), se tiver problemas faz um rollback
@@ -63,6 +68,38 @@ public class UsuarioService {
     }
     }
     
+    // adicionar monitoria
+    
+    public void inscreverAlunoEmMonitoria(Integer alunoId, Integer monitoriaId) {
+        // Verifica se o aluno existe
+        Usuario aluno = usuarioRepository.findById(alunoId)
+            .orElseThrow(() -> new UsuarioRunTime("Aluno não encontrado"));
+
+        // Verifica se é realmente um aluno
+        if (!aluno.getTipo().equals(TipoUsuario.ALUNO)) {
+            throw new UsuarioRunTime("Usuário não é um aluno");
+        }
+
+        // Verifica se a monitoria existe
+        Monitoria monitoria = monitoriaRepository.findById(monitoriaId)
+            .orElseThrow(() -> new MonitoriaRunTime("Monitoria não encontrada"));
+
+        // verifica se aluno ja esta inscrito na monitoria
+        if (aluno.getMonitorias().contains(monitoria)) {
+            throw new UsuarioRunTime("Aluno já está inscrito nesta monitoria");
+        }
+
+        // Adiciona a monitoria ao aluno
+        aluno.getMonitorias().add(monitoria);
+
+        // Também adiciona o aluno à monitoria (para manter a bidirecionalidade correta)
+        monitoria.getAlunos().add(aluno);
+
+        usuarioRepository.save(aluno);
+        monitoriaRepository.save(monitoria);
+    }
+    
+    // fazer login
     public Usuario login(String email, String senha) {
         return usuarioRepository.findByEmailAndSenha(email, senha)
                 .orElseThrow(() -> new UsuarioRunTime("Credenciais inválidas"));
