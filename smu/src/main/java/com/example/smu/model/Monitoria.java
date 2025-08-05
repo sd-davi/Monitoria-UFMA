@@ -31,7 +31,7 @@ public class Monitoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "id_monitoria")
     Integer id;
-
+    String nome;
     
     // curso
     @ManyToOne

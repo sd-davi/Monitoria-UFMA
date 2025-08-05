@@ -13,4 +13,11 @@ public class DisciplinaMonitoria {
     Integer monitoriaId;
     String monitoriaNome;
     Integer disciplinaId;
+
+    public DisciplinaMonitoria(Integer disciplinaId, Integer monitoriaId, String monitoriaNome) {
+        this.disciplinaId = disciplinaId;
+        this.monitoriaId = monitoriaId;
+        this.monitoriaNome = monitoriaNome;
+    }
+
 }

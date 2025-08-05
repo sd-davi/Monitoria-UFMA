@@ -1,17 +1,14 @@
 package com.example.smu.model.repository;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.example.smu.model.Curso;
 import com.example.smu.model.Dto.AlunoCursoDto;
-
-import java.util.List;
-
 import com.example.smu.model.Dto.DisciplinaCursoDto;
 import com.example.smu.model.Dto.MonitoriaCurso;
 
@@ -20,7 +17,7 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
     
     Optional<Curso> findBynome (String nome);
     Optional<Curso> findById (Integer id);
-    boolean existsByName(String nome);
+    boolean existsByNome(String nome);
     boolean existsById(Integer id);
     // sql
 

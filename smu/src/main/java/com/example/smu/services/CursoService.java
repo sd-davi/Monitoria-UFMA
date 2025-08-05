@@ -23,7 +23,7 @@ public class CursoService {
     // criar curso
     public Curso criarCurso(Curso curso) {
         VerificarCurso(curso);
-        if (cursoRepository.existsByName(curso.getNome())) {
+        if (cursoRepository.existsByNome(curso.getNome())) {
             throw new CursoRunTime("Curso já existe com o nome: " + curso.getNome());
         }
         return cursoRepository.save(curso);

@@ -1,21 +1,16 @@
 package com.example.smu.model.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.example.smu.model.Monitoria;
-import com.example.smu.model.Usuario;
-import com.example.smu.model.Dto.MonitoriaAlunoDto;
-import com.example.smu.model.Dto.MonitoriaCurso;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.example.smu.model.Dto.MonitoriaAlunoDto;
 import com.example.smu.model.Dto.MonitoriaMaterialDto;
-import com.example.smu.model.Dto.MonitoriaMonitorDto;
 import com.example.smu.model.Dto.MonitoriaSessaoDto;
+import com.example.smu.model.Monitoria;
 
 public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     
@@ -44,7 +39,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     @Query("""
     SELECT new com.example.smu.model.Dto.MonitoriaMaterialDto(
     mt.id,
-    mt.nome,
+    mt.titulo,
     m.id,
     m.nome
     )
@@ -67,7 +62,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
 
 
     // encontrar monitor MonitoriaMonitorDto.java
-
+/* 
     @Query("""
     SELECT new com.example.smu.model.Dto.MonitoriaMonitorDto(
     m.id,
@@ -78,7 +73,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     JOIN m.monitor monitor
     WHERE m.id = :monitoriaid
 """)
-Optional<MonitoriaMonitorDto> buscarMonitor(@Param("monitoriaid") Integer monitoriaid);
+Optional<MonitoriaMonitorDto> buscarMonitor(@Param("monitoriaid") Integer monitoriaid);*/
 
 
 }

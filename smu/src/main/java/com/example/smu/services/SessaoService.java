@@ -1,18 +1,17 @@
 package com.example.smu.services;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.smu.controller.Dto.SessaoDto;
 import com.example.smu.model.Monitoria;
 import com.example.smu.model.Sessao;
 import com.example.smu.model.Usuario;
 import com.example.smu.model.repository.MonitoriaRepository;
 import com.example.smu.model.repository.SessaoRepository;
 import com.example.smu.model.repository.UsuarioRepository;
-import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.SessaoRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
@@ -31,12 +30,7 @@ public class SessaoService {
     // salvar
 
     @Transactional
-    public Sessao criarSessao(Integer monitoriaId, LocalDateTime horario, String link) {
-        Monitoria monitoria = monitoriaRepository.findById(monitoriaId)
-                .orElseThrow(() -> new MonitoriaRunTime("Monitoria não encontrada"));
-
-        Sessao sessao = Sessao.builder().monitoria(monitoria).horario(horario).link(link).build();
-
+    public Sessao criarSessao(Sessao sessao){
         return sessaoRepository.save(sessao);
     }
 
@@ -68,5 +62,35 @@ public class SessaoService {
         VerificarId(id);
         return sessaoRepository.findSessoesByAlunoId(id);
     }
+
+    public void deletarPorId(Integer id) {
+        if (!sessaoRepository.existsById(id)) {
+            throw new SessaoRunTime("sessao inválida");
+        }
+        sessaoRepository.deleteById(id);
+    }
+
+    public Sessao buscarPorId(Integer id) {
+        return sessaoRepository.findById(id)
+                .orElseThrow(() -> new SessaoRunTime("Sessao não encontrada"));
+    }
+
+    public Sessao atualizar(Integer id, SessaoDto dto) {
+    Sessao sessao = sessaoRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Sessão não encontrada com o ID: " + id));
+
+    // Atualiza os campos com os dados do DTO
+    sessao.setLink(dto.getLink());
+    sessao.setHorario(dto.getHorario());
+
+    if (dto.getIdMonitoria() != null) {
+        Monitoria monitoria = Monitoria.builder()
+            .id(dto.getIdMonitoria())
+            .build();
+        sessao.setMonitoria(monitoria);
+    }
+
+    return sessaoRepository.save(sessao);
+}
 
 }

@@ -14,4 +14,10 @@ public class DisciplinaCursoDto {
     Integer disciplinaId;
     String disciplinaNome;
     Integer cursoId;
+
+    public DisciplinaCursoDto(Integer cursoId, Integer disciplinaId, String nome) {
+        this.cursoId = cursoId;
+        this.disciplinaId = disciplinaId;
+        this.disciplinaNome = nome;
+    }
 }

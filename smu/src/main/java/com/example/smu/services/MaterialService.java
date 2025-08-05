@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.smu.model.Material;
-import com.example.smu.model.Monitoria;
 import com.example.smu.model.repository.MaterialRepository;
 import com.example.smu.model.repository.MonitoriaRepository;
 import com.example.smu.model.repository.UsuarioRepository;
@@ -21,22 +20,8 @@ public class MaterialService {
     MaterialRepository materialRepository;
 
      // 1. Criar material para uma monitoria
-    public Material criarMaterial(Integer monitoriaId, String titulo, String descricao, String link, String arquivo) {
-        Monitoria monitoria = monitoriaRepository.findById(monitoriaId)
-            .orElseThrow(() -> new RuntimeException("Monitoria não encontrada"));
-
-        if (materialRepository.existsByTitulo(titulo)) {
-            throw new RuntimeException("Já existe um material com esse título");
-        }
-
-        Material material = new Material();
-        material.setTitulo(titulo);
-        material.setDescricao(descricao);
-        material.setLink(link);
-        material.setArquivo(arquivo);
-        material.setMonitoria(monitoria);
-
-        return materialRepository.save(material);
+    public Material criarMaterial(Material m) {
+        return materialRepository.save(m);
     }
 
     // 2. Buscar material por ID

@@ -5,15 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.smu.model.Curso;
+import com.example.smu.model.Disciplina;
 import com.example.smu.model.Dto.DisciplinaAluno;
 import com.example.smu.model.Dto.MonitoriaAlunoDto;
-import com.example.smu.model.Dto.MonitoriaMonitorDto;
-import com.example.smu.model.Curso;
 import com.example.smu.model.Monitoria;
 import com.example.smu.model.TipoUsuario;
 import com.example.smu.model.Usuario;
+import com.example.smu.model.repository.CursoRepository;
+import com.example.smu.model.repository.DisciplinaRepository;
 import com.example.smu.model.repository.MonitoriaRepository;
 import com.example.smu.model.repository.UsuarioRepository;
+import com.example.smu.services.exceptions.CursoRunTime;
+import com.example.smu.services.exceptions.DisciplinaRunTime;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
@@ -26,10 +30,17 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
     @Autowired
     MonitoriaRepository monitoriaRepository;
+    @Autowired
+    DisciplinaRepository disciplinaRepository;
+    @Autowired
+    CursoRepository cursoRepository;
 
     // salvar
     @Transactional // so salva apos o final (para evitar dados incosistentes), se tiver problemas faz um rollback
     public Usuario salvar(Usuario user){
+        Curso curso = cursoRepository.findById(user.getCurso().getId())
+    .orElseThrow(() -> new CursoRunTime("Curso não encontrado"));
+
         VerificarUsuario(user);
         if (usuarioRepository.existsByEmail(user.getEmail())) {
             throw new UsuarioRunTime("Email já cadastrado.");
@@ -98,6 +109,34 @@ public class UsuarioService {
         usuarioRepository.save(aluno);
         monitoriaRepository.save(monitoria);
     }
+    // inscrever em disciplina
+    public void inscreverAlunoEmDisciplina(Integer alunoId, Integer disciplinaId) {
+    // Verifica se o aluno existe
+    Usuario aluno = usuarioRepository.findById(alunoId)
+        .orElseThrow(() -> new UsuarioRunTime("Aluno não encontrado"));
+
+    // Verifica se é realmente um aluno
+    if (!aluno.getTipo().equals(TipoUsuario.ALUNO)) {
+        throw new UsuarioRunTime("Usuário não é um aluno");
+    }
+
+    // Verifica se a disciplina existe
+    Disciplina disciplina = disciplinaRepository.findById(disciplinaId)
+        .orElseThrow(() -> new DisciplinaRunTime("Disciplina não encontrada"));
+
+    // Verifica se o aluno já está inscrito
+    if (aluno.getDisciplinas().contains(disciplina)) {
+        throw new UsuarioRunTime("Aluno já está inscrito nesta disciplina");
+    }
+
+    // Inscreve
+    aluno.getDisciplinas().add(disciplina);
+    disciplina.getAlunos().add(aluno);
+
+    usuarioRepository.save(aluno);
+    disciplinaRepository.save(disciplina);
+}
+
     
     // fazer login
     public Usuario login(String email, String senha) {
@@ -140,15 +179,27 @@ public class UsuarioService {
         return usuarioRepository.MonitoriasPorAluno(id);
     }
 
-    public List<MonitoriaMonitorDto> MonitoriasPorMonitor(Integer id){
+   /*  public List<MonitoriaMonitorDto> MonitoriasPorMonitor(Integer id){
         VerificarId(id);
         return usuarioRepository.MonitoriasPorMonitor(id);
-    }
+    }*/
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }
-     public Usuario buscarPorId(Integer id) {
+    public Usuario buscarPorId(Integer id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioRunTime("Usuário não encontrado"));
     }
+
+    public void deletar(Integer id) {
+        usuarioRepository.deleteById(id);
+    }
+
+    public Usuario atualizar(Integer id, Usuario userAtualizado) {
+        Usuario existente = buscarPorId(id);
+        userAtualizado.setId(id); // garantir que será atualizado
+        VerificarUsuario(userAtualizado);
+        return usuarioRepository.save(userAtualizado);
+    }
+
 }

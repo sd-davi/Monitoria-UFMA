@@ -8,12 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.smu.model.Curso;
-import com.example.smu.model.TipoUsuario;
-import com.example.smu.model.Usuario;
-import com.example.smu.model.Dto.AlunoCursoDto;
 import com.example.smu.model.Dto.DisciplinaAluno;
 import com.example.smu.model.Dto.MonitoriaAlunoDto;
-import com.example.smu.model.Dto.MonitoriaMonitorDto;
+import com.example.smu.model.TipoUsuario;
+import com.example.smu.model.Usuario;
 
 public interface  UsuarioRepository extends JpaRepository<Usuario,Integer>{
     
@@ -71,7 +69,7 @@ public interface  UsuarioRepository extends JpaRepository<Usuario,Integer>{
 
     
     // listar monitorias do monitor
-    @Query("""
+    /*@Query("""
     SELECT new com.example.smu.model.Dto.MonitoriaMonitorDto(
     mo.id,
     mo.nome,
@@ -82,5 +80,5 @@ public interface  UsuarioRepository extends JpaRepository<Usuario,Integer>{
     JOIN Monitorias m ON m.monitor.id = mo.id
     WHERE mo.id =: monitorid
     """) List<MonitoriaMonitorDto> MonitoriasPorMonitor (@Param("monitorid") Integer monitorid);
-    
+    */
 }

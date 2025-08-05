@@ -5,12 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.smu.model.Monitoria;
 import com.example.smu.model.Dto.MonitoriaAlunoDto;
-import com.example.smu.model.Dto.MonitoriaCurso;
 import com.example.smu.model.Dto.MonitoriaMaterialDto;
-import com.example.smu.model.Dto.MonitoriaMonitorDto;
 import com.example.smu.model.Dto.MonitoriaSessaoDto;
+import com.example.smu.model.Monitoria;
 import com.example.smu.model.Usuario;
 import com.example.smu.model.repository.CursoRepository;
 import com.example.smu.model.repository.DisciplinaRepository;
@@ -98,8 +96,12 @@ public class MonitoriaService {
         return monitoriaRepository.SessoesPorMonitoria(id);
     }
 
+    public List<Monitoria> listarTodos() {
+        return monitoriaRepository.findAll();
+    }
+    /* 
     public MonitoriaMonitorDto buscarMonitor(Integer monitoriaId) {
     return monitoriaRepository.buscarMonitor(monitoriaId)
         .orElseThrow(() -> new MonitoriaRunTime("Monitor não encontrado"));
-}
+}*/
 }

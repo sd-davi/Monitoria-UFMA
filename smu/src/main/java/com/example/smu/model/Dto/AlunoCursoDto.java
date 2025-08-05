@@ -14,4 +14,10 @@ public class AlunoCursoDto {
     Integer alunoId;
     String alunoNome;
     Integer cursoId;
+
+     public AlunoCursoDto(Integer cursoId, Integer alunoId, String nome) {
+        this.cursoId = cursoId;
+        this.alunoId = alunoId;
+        this.alunoNome = nome;
+    }
 }

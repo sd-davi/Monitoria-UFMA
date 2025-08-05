@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.smu.model.Disciplina;
-import com.example.smu.model.Usuario;
 import com.example.smu.model.Dto.DisciplinaAluno;
 import com.example.smu.model.Dto.DisciplinaMonitoria;
+import com.example.smu.model.Usuario;
 import com.example.smu.model.repository.DisciplinaRepository;
 import com.example.smu.model.repository.UsuarioRepository;
 import com.example.smu.services.exceptions.DisciplinaRunTime;
@@ -103,4 +103,11 @@ public class DisciplinaService {
         usuarioRepository.save(aluno);
     }
 
+    public List<Disciplina> listarTodas() {
+        return disciplinaRepository.findAll();
+    }
+
+    public void deletar(Integer id) {
+        disciplinaRepository.deleteById(id);
+    }
 }
