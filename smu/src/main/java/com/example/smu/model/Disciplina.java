@@ -1,7 +1,10 @@
 package com.example.smu.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +39,7 @@ public class Disciplina {
     // aluno
     @ManyToMany(mappedBy="disciplinas")
     @Builder.Default
+    @JsonBackReference
     Set <Usuario> alunos = new HashSet<>();;
 
     //monitoria
@@ -47,7 +51,22 @@ public class Disciplina {
     // curso
     @ManyToOne
     @JoinColumn(name="curso_id")
+    @JsonBackReference
     Curso curso;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Disciplina disciplina = (Disciplina) o;
+        // Só compara pela identidade se o ID não for nulo (entidade já persistida)
+        return id != null && Objects.equals(id, disciplina.id);
+    }
+
+    @Override
+    public int hashCode() {
+        // Usa um valor fixo se a entidade for nova, ou o hash do ID se já existir
+        return id != null ? id.hashCode() : System.identityHashCode(this);
+    }
 
 }

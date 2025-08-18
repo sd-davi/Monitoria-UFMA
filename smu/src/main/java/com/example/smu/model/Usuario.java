@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -73,6 +76,7 @@ public class Usuario {
         inverseJoinColumns= @JoinColumn(name= "disciplina_id")
     )
     @Builder.Default
+    @JsonManagedReference
     Set<Disciplina> disciplinas = new HashSet<>();
 
     // sessão
@@ -102,4 +106,20 @@ public class Usuario {
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     Set<Avaliacao> avaliacoes = new HashSet<>();
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        // Só compara pela identidade se o ID não for nulo (entidade já persistida)
+        return id != null && Objects.equals(id, usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        // Usa um valor fixo se a entidade for nova, ou o hash do ID se já existir
+        return id != null ? id.hashCode() : System.identityHashCode(this);
+    }
 }

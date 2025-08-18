@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.smu.controller.Dto.DisciplinaDto;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
+import com.example.smu.services.CursoService;
 import com.example.smu.services.DisciplinaService;
 import com.example.smu.services.exceptions.DisciplinaRunTime;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/disciplina")
@@ -26,18 +29,25 @@ public class DisciplinaController {
     @Autowired
     private DisciplinaService service;
 
+    @Autowired
+    CursoService  cursoService;
+
     // Salvar disciplina
     @PostMapping("/salvar")
     public ResponseEntity<?> salvar(@RequestBody DisciplinaDto dto) {
         try {
+
+            Curso c =  cursoService.buscarPorId(dto.getIdCurso());
             Disciplina disciplina = Disciplina.builder()
                 .nome(dto.getNome())
                 .codigo(dto.getCodigo())
-                .curso(Curso.builder().id(dto.getIdCurso()).build())
+                .curso(c)
                 .build();
 
             Disciplina salva = service.SalvarDisciplina (disciplina);
             return new ResponseEntity<>(salva, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body("Curso não encontrado");
         } catch (DisciplinaRunTime e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
