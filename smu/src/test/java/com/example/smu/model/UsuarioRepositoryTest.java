@@ -1,5 +1,6 @@
 package com.example.smu.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class UsuarioRepositoryTest {
                 .email("davi22566@gmail.com")
                 .senha("123")
                 .matricula("123453327856467456611")
-                .dataNascimento(LocalDateTime.of(2000, 1, 1, 0, 0))
+                .dataNascimento(LocalDate.of(2000, 012, 01))
                 .tipo(TipoUsuario.ALUNO)
                 .curso(curso)
                 .build();
@@ -68,7 +69,7 @@ public class UsuarioRepositoryTest {
                 .email("davi1834843@gmail.com")
                 .senha("123")
                 .matricula("123432343356")
-                .dataNascimento(LocalDateTime.of(2000, 1, 1, 0, 0))
+                .dataNascimento(LocalDate.of(2000, 012, 01))
                 .tipo(TipoUsuario.ALUNO)
                 .curso(curso)
                 .build();
