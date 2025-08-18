@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CursoDto {
     Integer id;
+    String codigo;
     String nome;
 
     //public CursoDto(Integer id, String nome) {this.id = id; this.nome = nome;}

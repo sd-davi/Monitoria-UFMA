@@ -35,6 +35,7 @@ public class CursoController {
         try {
             Curso curso = Curso.builder()
                 .nome(dto.getNome())
+                .codigo(dto.getCodigo())
                 .build();
 
             Curso salvo = cursoService.criarCurso(curso);

@@ -35,6 +35,9 @@ public class CursoService {
         if (c.getNome() == null || c.getNome().trim().isEmpty()){
             throw new CursoRunTime("Curso não tem nome");
         }
+        if(c.getCodigo() == null || c.getCodigo().trim().isEmpty()){
+            throw new CursoRunTime("Curso não tem codigo");
+        }
     }
     //Buscar curso por ID
     public Curso buscarPorId(Integer id) {
