@@ -1,4 +1,5 @@
 package com.example.smu.controller.Dto;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.example.smu.model.TipoUsuario;
@@ -16,7 +17,7 @@ public class UsuarioDto {
     String nome;
     String email;
     String senha;
-    LocalDateTime dataNascimento;
+    LocalDate dataNascimento;
     String matricula;
     TipoUsuario tipo;
     Integer idCurso;
