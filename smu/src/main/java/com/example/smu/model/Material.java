@@ -1,5 +1,7 @@
 package com.example.smu.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id_usuario")
+    @Column(name= "id_material")
     Integer id;
     
     String titulo;
@@ -31,6 +33,9 @@ public class Material {
     String link;
     String arquivo;
 
+    @Column(name = "data_envio")
+    private LocalDateTime dataEnvio;
+    
     @ManyToOne
     @JoinColumn(name="monitoria_id")
     Monitoria monitoria;

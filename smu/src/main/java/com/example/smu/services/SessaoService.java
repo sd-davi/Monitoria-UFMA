@@ -80,7 +80,6 @@ public class SessaoService {
         .orElseThrow(() -> new RuntimeException("Sessão não encontrada com o ID: " + id));
 
     // Atualiza os campos com os dados do DTO
-    sessao.setLink(dto.getLink());
     sessao.setHorario(dto.getHorario());
 
     if (dto.getIdMonitoria() != null) {

@@ -1,8 +1,12 @@
 package com.example.smu.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,10 +18,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -37,7 +43,7 @@ public class Usuario {
     //@Column(unique = true)
     String email;
     String senha;
-    LocalDateTime dataNascimento;
+    LocalDate dataNascimento;
     String matricula;
 
     @Enumerated(EnumType.STRING)
@@ -55,7 +61,8 @@ public class Usuario {
         joinColumns= @JoinColumn(name="usuario_id"),
         inverseJoinColumns = @JoinColumn(name="monitoria_id")
     )
-    Set<Monitoria> monitorias;
+    @Builder.Default
+    Set<Monitoria> monitorias = new HashSet<>();
 
     // disciplina
 
@@ -65,7 +72,8 @@ public class Usuario {
         joinColumns = @JoinColumn(name="usuario_id"),
         inverseJoinColumns= @JoinColumn(name= "disciplina_id")
     )
-    Set<Disciplina> disciplinas;
+    @Builder.Default
+    Set<Disciplina> disciplinas = new HashSet<>();
 
     // sessão
     @ManyToMany
@@ -74,8 +82,24 @@ public class Usuario {
         joinColumns = @JoinColumn(name="usuario_id"),
         inverseJoinColumns= @JoinColumn(name= "sessao_id")
     )
-    Set<Sessao> sessoes;
+    @Builder.Default
+    Set<Sessao> sessoes = new HashSet<>();
 
+    //mensagem
 
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    Set<Mensagem> mensagens =  new HashSet<>();
 
+    // notificação
+
+    @OneToMany(mappedBy = "destinatario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    Set<Notificacao> notificacoes = new HashSet<>();
+
+    //mensagem
+    
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    Set<Avaliacao> avaliacoes = new HashSet<>();
 }

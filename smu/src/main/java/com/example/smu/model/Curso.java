@@ -1,5 +1,6 @@
 package com.example.smu.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -25,10 +26,11 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "id_curso")
     Integer id;
-    
+    String codigo;
     String nome;  
 
     // disciplina
     @OneToMany(mappedBy = "curso")
-    Set<Disciplina> disciplinas;
+    @Builder.Default
+    Set<Disciplina> disciplinas = new HashSet<>();;
 }

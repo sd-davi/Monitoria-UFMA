@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.smu.controller.Dto.UsuarioDto;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Usuario;
+import com.example.smu.services.CursoService;
 import com.example.smu.services.UsuarioService;
 import com.example.smu.services.exceptions.DisciplinaRunTime;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -29,25 +32,29 @@ public class UsuarioController {
     @Autowired
     UsuarioService service;
 
+    @Autowired
+    CursoService  cursoService;
+
     // salvar
     @PostMapping("/salvar")
     public ResponseEntity salvar(@RequestBody UsuarioDto usuarioRequest){
 
-        Integer cursoId = null;
-        if (usuarioRequest.getIdCurso() != null) {
-            cursoId = usuarioRequest.getIdCurso();
-        }
-        Usuario user = Usuario.builder()
+        try {
+            Curso c =  cursoService.buscarPorId(usuarioRequest.getIdCurso());
+       
+            Usuario user = Usuario.builder()
                               .nome(usuarioRequest.getNome())
                               .email(usuarioRequest.getEmail())
                               .senha(usuarioRequest.getSenha())
                               .dataNascimento(usuarioRequest.getDataNascimento())
                               .matricula(usuarioRequest.getMatricula())
                               .tipo(usuarioRequest.getTipo())
-                              .curso(Curso.builder().id(cursoId).build()).build();
-        try{
+                              .curso(c).build();
             Usuario salvo = service.salvar(user);
             return new ResponseEntity(salvo, HttpStatus.CREATED);
+        }
+        catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body("Curso ou usuário não encontrado");    
         } catch (UsuarioRunTime e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -55,9 +62,12 @@ public class UsuarioController {
 
     // logar
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String senha) {
+    public ResponseEntity<?> login(@RequestBody UsuarioDto dto) {
         try {
-            Usuario logado = service.login(email, senha);
+            Usuario logado = service.login(
+                dto.getEmail(),
+                dto.getSenha(),
+                dto.getTipo());
             return ResponseEntity.ok(logado);
         } catch (UsuarioRunTime e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

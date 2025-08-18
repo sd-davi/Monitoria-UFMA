@@ -34,7 +34,6 @@ public class SessaoController {
         }
 
         Sessao sessao = Sessao.builder()
-                            .link(dto.getLink())
                             .horario(dto.getHorario())
                             .monitoria(Monitoria.builder().id(monitoriaId).build())
                             .build();

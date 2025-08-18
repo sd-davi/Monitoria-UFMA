@@ -1,5 +1,7 @@
 package com.example.smu.model;
 
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -32,7 +34,14 @@ public class Monitoria {
     @Column(name= "id_monitoria")
     Integer id;
     String nome;
-    
+
+    @Column(name = "dias_da_semana", length = 50)
+    private String diasDaSemana;
+
+    @Column
+    private LocalTime horario;
+
+    private String link;
     // curso
     @ManyToOne
     @JoinColumn(name= "curso_id")
@@ -40,10 +49,11 @@ public class Monitoria {
 
     //sessões
     @OneToMany(mappedBy = "monitoria")
-    Set<Sessao> sessoes;
+    @Builder.Default
+    Set<Sessao> sessoes = new HashSet<>();;
 
     // disciplina
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="disciplina_id")
     Disciplina disciplina;
 
@@ -54,7 +64,8 @@ public class Monitoria {
 
     // aluno
     @ManyToMany(mappedBy="monitorias")
-    Set <Usuario> alunos;
+    @Builder.Default
+    Set <Usuario> alunos =  new HashSet<>();;
 
     
 }

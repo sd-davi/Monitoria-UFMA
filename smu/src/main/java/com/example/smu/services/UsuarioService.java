@@ -139,9 +139,17 @@ public class UsuarioService {
 
     
     // fazer login
-    public Usuario login(String email, String senha) {
-        return usuarioRepository.findByEmailAndSenha(email, senha)
-                .orElseThrow(() -> new UsuarioRunTime("Credenciais inválidas"));
+    public Usuario login(String email, String senha, TipoUsuario tipo) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+        .orElseThrow(() -> new IllegalArgumentException("E-mail ou senha inválidos"));
+
+        if (!usuario.getSenha().equals(senha)) {
+        throw new IllegalArgumentException("E-mail ou senha inválidos");
+        }
+        if (!usuario.getTipo().equals(tipo)) {
+        throw new IllegalArgumentException("Tipo de usuário incorreto");
+        }
+        return usuario;
     }
 
     // consultas
