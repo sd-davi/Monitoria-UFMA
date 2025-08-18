@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.UsuarioDto;
+import com.example.smu.controller.Dto.UsuarioResponseDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Usuario;
 import com.example.smu.services.CursoService;
@@ -79,7 +80,7 @@ public class UsuarioController {
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
             Usuario usuario = service.buscarPorId(id);
-            return ResponseEntity.ok(usuario);
+            return ResponseEntity.ok(toResponseDTO(usuario));
         } catch (UsuarioRunTime e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -128,5 +129,17 @@ public class UsuarioController {
             }
         }
 
-    
+    // ---------- CONVERSÃO PARA DTO ----------
+    private UsuarioResponseDTO toResponseDTO(Usuario usuario) {
+        return UsuarioResponseDTO.builder()
+                .id(usuario.getId())
+                .nome(usuario.getNome())
+                .email(usuario.getEmail())
+                .dataNascimento(usuario.getDataNascimento())
+                .matricula(usuario.getMatricula())
+                .tipoUsuario(usuario.getTipo())
+                .cursoId(usuario.getCurso().getId())
+                .cursoNome(usuario.getCurso().getNome())
+                .build();
+    }
 }
