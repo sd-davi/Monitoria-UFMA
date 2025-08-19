@@ -18,7 +18,7 @@ public class CursoComAlunosDTO {
     private Integer id;
     private String nome;
     private Set<UsuarioDto> alunos;
-
+    private Set<DisciplinaDto> disciplinas;
 
     public CursoComAlunosDTO(Curso curso){
         this.id = curso.getId();
@@ -26,5 +26,8 @@ public class CursoComAlunosDTO {
 
         this.alunos =  curso.getAlunos().stream()
                             .map(UsuarioDto::new).collect(Collectors.toSet());
+
+        this.disciplinas = curso.getDisciplinas().stream()
+        .map(DisciplinaDto::new).collect(Collectors.toSet());
     }
 }
