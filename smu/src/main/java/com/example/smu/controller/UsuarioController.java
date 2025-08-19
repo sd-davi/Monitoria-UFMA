@@ -54,7 +54,7 @@ public class UsuarioController {
                               .tipo(usuarioRequest.getTipo())
                               .curso(c).build();
             Usuario salvo = service.salvar(user, tokenMonitor);
-            return new ResponseEntity(salvo, HttpStatus.CREATED);
+            return new ResponseEntity(toResponseDTO(salvo), HttpStatus.CREATED);
         }
         catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body("Curso ou usuário não encontrado");    
