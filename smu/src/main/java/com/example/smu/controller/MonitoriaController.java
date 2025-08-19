@@ -18,7 +18,10 @@ import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
 import com.example.smu.model.Monitoria;
 import com.example.smu.model.Usuario;
+import com.example.smu.services.CursoService;
+import com.example.smu.services.DisciplinaService;
 import com.example.smu.services.MonitoriaService;
+import com.example.smu.services.UsuarioService;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
@@ -29,15 +32,27 @@ public class MonitoriaController {
     @Autowired
     MonitoriaService service;
 
+    @Autowired
+    CursoService cursoService;
+
+    @Autowired
+    DisciplinaService disciplinaService;
+
+    @Autowired
+    UsuarioService usuarioService;
+
     // salvar
     @PostMapping("/salvar")
     public ResponseEntity<?> salvar(@RequestBody MonitoriaDto monitoriaRequest) {
         try {
+            Curso curso = cursoService.buscarPorId(monitoriaRequest.getIdCurso());
+            Disciplina disc = disciplinaService.buscarPorId(monitoriaRequest.getIdDisciplina());
+            Usuario monitor =  usuarioService.buscarPorId(monitoriaRequest.getIdMonitor());
             Monitoria monitoria = Monitoria.builder()
                     .nome(monitoriaRequest.getNome())
-                    .curso(Curso.builder().id(monitoriaRequest.getIdCurso()).build())
-                    .disciplina(Disciplina.builder().id(monitoriaRequest.getIdDisciplina()).build())
-                    .monitor(Usuario.builder().id(monitoriaRequest.getIdMonitor()).build())
+                    .curso(curso)
+                    .disciplina(disc)
+                    .monitor(monitor)
                     .build();
 
             Monitoria salva = service.cadastrarMonitoria(monitoria);
