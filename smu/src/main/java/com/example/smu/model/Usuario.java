@@ -55,7 +55,7 @@ public class Usuario {
     // curso
     @ManyToOne
     @JoinColumn(name = "curso_id")
-    private Curso curso;
+    private Curso curso_aluno;
 
     // monitoria 
     @ManyToMany

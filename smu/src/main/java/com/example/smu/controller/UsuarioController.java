@@ -52,7 +52,7 @@ public class UsuarioController {
                               .dataNascimento(usuarioRequest.getDataNascimento())
                               .matricula(usuarioRequest.getMatricula())
                               .tipo(usuarioRequest.getTipo())
-                              .curso(c).build();
+                              .curso_aluno(c).build();
             Usuario salvo = service.salvar(user, tokenMonitor);
             return new ResponseEntity(salvo, HttpStatus.CREATED);
         }
@@ -141,8 +141,8 @@ public class UsuarioController {
                 .dataNascimento(usuario.getDataNascimento())
                 .matricula(usuario.getMatricula())
                 .tipoUsuario(usuario.getTipo())
-                .cursoId(usuario.getCurso().getId())
-                .cursoNome(usuario.getCurso().getNome())
+                .cursoId(usuario.getCurso_aluno().getId())
+                .cursoNome(usuario.getCurso_aluno().getNome())
                 .build();
     }
 }

@@ -36,8 +36,11 @@ public class Curso {
     @OneToMany(mappedBy = "curso")
     @Builder.Default
     @JsonManagedReference
-    Set<Disciplina> disciplinas = new HashSet<>();;
+    Set<Disciplina> disciplinas = new HashSet<>();
 
+    @OneToMany(mappedBy = "curso_aluno")
+    @Builder.Default
+    Set<Usuario> alunos = new HashSet<>();
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

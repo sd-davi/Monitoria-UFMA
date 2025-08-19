@@ -37,7 +37,7 @@ public class UsuarioRepositoryTest {
                 .matricula("123453327856467456611")
                 .dataNascimento(LocalDate.of(2000, 012, 01))
                 .tipo(TipoUsuario.ALUNO)
-                .curso(curso)
+                .curso_aluno(curso)
                 .build();
 
         // ação
@@ -50,7 +50,7 @@ public class UsuarioRepositoryTest {
         Assertions.assertEquals(novo.getSenha(), retorno.getSenha());
         Assertions.assertEquals(novo.getMatricula(), retorno.getMatricula());
         Assertions.assertEquals(novo.getTipo(), retorno.getTipo());
-        Assertions.assertEquals(curso.getId(), retorno.getCurso().getId());
+        Assertions.assertEquals(curso.getId(), retorno.getCurso_aluno().getId());
 
         // rollback
         ur.delete(retorno);
@@ -71,7 +71,7 @@ public class UsuarioRepositoryTest {
                 .matricula("123432343356")
                 .dataNascimento(LocalDate.of(2000, 012, 01))
                 .tipo(TipoUsuario.ALUNO)
-                .curso(curso)
+                .curso_aluno(curso)
                 .build();
 
     // ação
