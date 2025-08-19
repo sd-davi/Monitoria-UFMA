@@ -39,7 +39,6 @@ public class Disciplina {
     // aluno
     @ManyToMany(mappedBy="disciplinas")
     @Builder.Default
-    @JsonBackReference
     Set <Usuario> alunos = new HashSet<>();;
 
     //monitoria

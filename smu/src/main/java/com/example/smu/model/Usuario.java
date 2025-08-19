@@ -76,7 +76,6 @@ public class Usuario {
         inverseJoinColumns= @JoinColumn(name= "disciplina_id")
     )
     @Builder.Default
-    @JsonManagedReference
     Set<Disciplina> disciplinas = new HashSet<>();
 
     // sessão

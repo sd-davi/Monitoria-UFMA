@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.smu.controller.Dto.AlunosPorDisciplinaDTO;
 import com.example.smu.controller.Dto.UsuarioDto;
 import com.example.smu.controller.Dto.UsuarioResponseDTO;
 import com.example.smu.model.Curso;
@@ -80,7 +81,8 @@ public class UsuarioController {
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
             Usuario usuario = service.buscarPorId(id);
-            return ResponseEntity.ok(toResponseDTO(usuario));
+            AlunosPorDisciplinaDTO dto = new AlunosPorDisciplinaDTO(usuario);
+            return ResponseEntity.ok(dto);
         } catch (UsuarioRunTime e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

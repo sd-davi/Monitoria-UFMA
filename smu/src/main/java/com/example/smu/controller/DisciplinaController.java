@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.DisciplinaDto;
+import com.example.smu.controller.Dto.DisciplinasComAlunosDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
 import com.example.smu.services.CursoService;
@@ -58,7 +59,8 @@ public class DisciplinaController {
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
             Disciplina disciplina = service.buscarPorId(id);
-            return ResponseEntity.ok(disciplina);
+            DisciplinasComAlunosDTO dto = new DisciplinasComAlunosDTO(disciplina);
+            return ResponseEntity.ok(dto);
         } catch (DisciplinaRunTime e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
