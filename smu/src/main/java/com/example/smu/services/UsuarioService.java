@@ -40,7 +40,7 @@ public class UsuarioService {
     // salvar
     @Transactional // so salva apos o final (para evitar dados incosistentes), se tiver problemas faz um rollback
     public Usuario salvar(Usuario user, String tokenMonitor){
-        Curso curso = cursoRepository.findById(user.getCurso_aluno().getId())
+        Curso curso = cursoRepository.findById(user.getCurso().getId())
     .orElseThrow(() -> new CursoRunTime("Curso não encontrado"));
 
         VerificarUsuario(user);
@@ -81,7 +81,7 @@ public class UsuarioService {
         throw new UsuarioRunTime("Tipo de usuário não definido");
     }
 
-    if (user.getCurso_aluno() == null) {
+    if (user.getCurso() == null) {
         throw new UsuarioRunTime("Curso não atribuído ao usuário");
     }
     }

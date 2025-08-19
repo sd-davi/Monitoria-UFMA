@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.smu.controller.Dto.CursoComAlunosDTO;
 import com.example.smu.controller.Dto.CursoDto;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Dto.AlunoCursoDto;
@@ -46,8 +47,10 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public Curso buscarPorId(@PathVariable Integer id) {
-        return cursoService.buscarPorId(id);
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
+        Curso c =  cursoService.buscarPorId(id);
+        CursoComAlunosDTO dto = new CursoComAlunosDTO(c);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/nome/{nome}")

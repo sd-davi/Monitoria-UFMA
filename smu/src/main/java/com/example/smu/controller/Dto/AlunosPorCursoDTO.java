@@ -21,6 +21,6 @@ public class AlunosPorCursoDTO {
     public AlunosPorCursoDTO(Usuario aluno){
         this.id = aluno.getId();
         this.nome = aluno.getNome();
-        this.curso = aluno.getCurso_aluno().getNome();
+        this.curso = aluno.getCurso().getNome();
     }
 }

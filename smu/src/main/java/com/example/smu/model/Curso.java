@@ -38,7 +38,7 @@ public class Curso {
     @JsonManagedReference
     Set<Disciplina> disciplinas = new HashSet<>();
 
-    @OneToMany(mappedBy = "curso_aluno")
+    @OneToMany(mappedBy = "curso")
     @Builder.Default
     Set<Usuario> alunos = new HashSet<>();
     @Override
