@@ -39,7 +39,8 @@ public class UsuarioController {
 
     // salvar
     @PostMapping("/salvar")
-    public ResponseEntity salvar(@RequestBody UsuarioDto usuarioRequest){
+    public ResponseEntity salvar(@RequestBody UsuarioDto usuarioRequest,
+    @RequestParam(required = false) String tokenMonitor){
 
         try {
             Curso c =  cursoService.buscarPorId(usuarioRequest.getIdCurso());
@@ -52,7 +53,7 @@ public class UsuarioController {
                               .matricula(usuarioRequest.getMatricula())
                               .tipo(usuarioRequest.getTipo())
                               .curso(c).build();
-            Usuario salvo = service.salvar(user);
+            Usuario salvo = service.salvar(user, tokenMonitor);
             return new ResponseEntity(salvo, HttpStatus.CREATED);
         }
         catch (EntityNotFoundException e) {

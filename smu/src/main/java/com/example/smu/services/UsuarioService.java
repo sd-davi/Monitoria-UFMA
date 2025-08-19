@@ -35,15 +35,22 @@ public class UsuarioService {
     @Autowired
     CursoRepository cursoRepository;
 
+    private static final String TOKEN_MONITOR = "MONITOR123";
+
     // salvar
     @Transactional // so salva apos o final (para evitar dados incosistentes), se tiver problemas faz um rollback
-    public Usuario salvar(Usuario user){
+    public Usuario salvar(Usuario user, String tokenMonitor){
         Curso curso = cursoRepository.findById(user.getCurso().getId())
     .orElseThrow(() -> new CursoRunTime("Curso não encontrado"));
 
         VerificarUsuario(user);
         if (usuarioRepository.existsByEmail(user.getEmail())) {
             throw new UsuarioRunTime("Email já cadastrado.");
+        }
+        if (user.getTipo() == TipoUsuario.MONITOR) {
+            if (!TOKEN_MONITOR.equals(tokenMonitor)) {
+                throw new IllegalArgumentException("Token de monitor inválido.");
+            }
         }
         return usuarioRepository.save(user);
     }
