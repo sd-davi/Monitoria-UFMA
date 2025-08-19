@@ -1,5 +1,8 @@
 package com.example.smu.controller.Dto;
 
+import com.example.smu.model.Curso;
+import com.example.smu.model.Disciplina;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +17,8 @@ public class CursoDto {
     String codigo;
     String nome;
 
-    //public CursoDto(Integer id, String nome) {this.id = id; this.nome = nome;}
+    public CursoDto(Curso curso) {
+        this.id = curso.getId();
+        this.nome = curso.getNome();
+    }
 }
