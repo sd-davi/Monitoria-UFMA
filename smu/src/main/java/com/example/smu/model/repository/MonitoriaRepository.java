@@ -30,7 +30,7 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     )
     FROM Monitoria m
     JOIN m.alunos a
-    WHERE m.id =: monitoriaid
+    WHERE m.id = :monitoriaid
     """) List<MonitoriaAlunoDto> AlunosPorMonitoria (@Param("monitoriaid") Integer monitoriaid);
 
 
@@ -44,8 +44,8 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     m.nome
     )
     FROM Monitoria m
-    JOIN Material mt ON mt.monitoria.id = m.id
-    WHERE m.id =: monitoriaid
+    JOIN m.materiais mt
+    WHERE m.id = :monitoriaid
     """) List<MonitoriaMaterialDto> MateriaisPorMonitoria(@Param("monitoriaid") Integer monitoriaid);
 
     // listar as sessões MonitoriaSessaoDto
@@ -56,8 +56,8 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     m.nome
     )
     FROM Monitoria m
-    JOIN Sessao s ON s.monitoria.id = m.id
-    WHERE m.id =: monitoriaid
+    JOIN m.sessoes s
+    WHERE m.id = :monitoriaid
     """) List<MonitoriaSessaoDto> SessoesPorMonitoria(@Param("monitoriaid") Integer monitoriaid);
 
 

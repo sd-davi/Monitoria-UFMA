@@ -82,10 +82,10 @@ public class CursoController {
     public List<DisciplinaCursoDto> listarDisciplinas(@PathVariable Integer id) {
         return cursoService.listarDisciplinas(id);
     }
-
+    /* 
     @GetMapping("/{id}/monitorias")
     public List<MonitoriaCurso> listarMonitorias(@PathVariable Integer id) {
         return cursoService.listarMonitorias(id);
-    }
+    }*/
 }
 

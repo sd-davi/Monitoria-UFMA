@@ -41,6 +41,7 @@ public class Curso {
     @OneToMany(mappedBy = "curso")
     @Builder.Default
     Set<Usuario> alunos = new HashSet<>();
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

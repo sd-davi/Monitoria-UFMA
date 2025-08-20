@@ -29,23 +29,27 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
     a.nome
     )
     FROM Curso c
-    JOIN Usuario a ON a.curso.id = c.id
-    WHERE c.id =: cursoid
+    JOIN c.alunos a
+    WHERE c.id = :cursoid
     """) List<AlunoCursoDto> AlunosPorCurso (@Param("cursoid") Integer cursoid);
 
     // listar disciplinas no curso
     @Query("""
     SELECT new com.example.smu.model.Dto.DisciplinaCursoDto(
-    c.id,
-    d.id,
-    d.nome
+        c.id,
+        d.id,
+        d.nome
     )
     FROM Curso c
-    JOIN Disciplina d ON d.curso.id = c.id
-    WHERE c.id =: cursoid
-    """) List<DisciplinaCursoDto> DisciplinasPorCurso(@Param("cursoid") Integer cursoid);
+    JOIN c.disciplinas d   
+    WHERE c.id = :cursoid
+""")
+List<DisciplinaCursoDto> DisciplinasPorCurso(@Param("cursoid") Integer cursoid);
+
 
     // lista de monitorias disponiveis
+    /* 
+
     @Query("""
     SELECT new com.example.smu.model.Dto.MonitoriaCurso(
     c.id,
@@ -53,8 +57,10 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
     m.nome
     )
     FROM Curso c
-    JOIN Monitoria m ON m.curso.id = c.id
+    JOIN c.monitorias m
     WHERE c.id =: cursoid
     """) List<MonitoriaCurso> monitoriaPorCurso(@Param("cursoid") Integer cursoid);
+     
+    */
 
 }

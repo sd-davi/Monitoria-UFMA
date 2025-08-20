@@ -31,7 +31,7 @@ public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer>
     )
     FROM Disciplina d
     JOIN d.alunos a
-    WHERE d.id =: disciplinaid
+    WHERE d.id = :disciplinaid
     """) List<DisciplinaAluno> AlunosPorDisciplina (@Param("disciplinaid") Integer disciplinaid);
 
     // lista de monitorias disponiveis
@@ -42,8 +42,8 @@ public interface  DisciplinaRepository extends JpaRepository<Disciplina,Integer>
     m.nome
     )
     FROM Disciplina d
-    JOIN Monitoria m ON m.disciplina.id = d.id
-    WHERE d.id =: disciplinaid
+    JOIN d.monitorias m
+    WHERE d.id = :disciplinaid
     """) List<DisciplinaMonitoria> monitoriaPorDisciplina(@Param("disciplinaid") Integer disciplinaid);
 
 

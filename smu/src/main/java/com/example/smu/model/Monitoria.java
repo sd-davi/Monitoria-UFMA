@@ -50,8 +50,7 @@ public class Monitoria {
     //sessões
     @OneToMany(mappedBy = "monitoria")
     @Builder.Default
-    Set<Sessao> sessoes = new HashSet<>();;
-
+    Set<Sessao> sessoes = new HashSet<>();
     // disciplina
     @ManyToOne
     @JoinColumn(name="disciplina_id")
@@ -67,5 +66,8 @@ public class Monitoria {
     @Builder.Default
     Set <Usuario> alunos =  new HashSet<>();;
 
+    @OneToMany(mappedBy = "monitoria")
+    @Builder.Default
+    Set<Material> materiais = new HashSet<>();;
     
 }
