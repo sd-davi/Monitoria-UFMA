@@ -48,7 +48,7 @@ List<DisciplinaCursoDto> DisciplinasPorCurso(@Param("cursoid") Integer cursoid);
 
 
     // lista de monitorias disponiveis
-    /* 
+    
 
     @Query("""
     SELECT new com.example.smu.model.Dto.MonitoriaCurso(
@@ -58,9 +58,8 @@ List<DisciplinaCursoDto> DisciplinasPorCurso(@Param("cursoid") Integer cursoid);
     )
     FROM Curso c
     JOIN c.monitorias m
-    WHERE c.id =: cursoid
+    WHERE c.id = :cursoid
     """) List<MonitoriaCurso> monitoriaPorCurso(@Param("cursoid") Integer cursoid);
      
-    */
 
 }
