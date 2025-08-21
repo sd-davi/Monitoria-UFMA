@@ -92,6 +92,7 @@ public class CursoService {
     }
 
     // Listar monitorias do curso
+    
     public List<MonitoriaCurso> listarMonitorias(Integer cursoId) {
         VerificarId(cursoId);
         return cursoRepository.monitoriaPorCurso(cursoId);

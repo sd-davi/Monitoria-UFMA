@@ -1,6 +1,7 @@
 package com.example.smu.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.AlunosPorDisciplinaDTO;
 import com.example.smu.controller.Dto.UsuarioDto;
+import com.example.smu.controller.Dto.UsuarioListaDTO;
 import com.example.smu.controller.Dto.UsuarioResponseDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Usuario;
@@ -91,8 +93,13 @@ public class UsuarioController {
 
     // Listar todos os usuários
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarTodos() {
-        return ResponseEntity.ok(service.listarTodos());
+    public ResponseEntity<List<UsuarioListaDTO>> listarAlunos(){
+        List<Usuario> todos = service.listarTodos();
+
+        List<UsuarioListaDTO> listaDTO = todos.stream().map(UsuarioListaDTO::new).collect(Collectors.toList());
+
+        return ResponseEntity.ok(listaDTO);
+
     }
 
     // Deletar usuário

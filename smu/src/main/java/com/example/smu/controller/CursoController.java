@@ -1,6 +1,7 @@
 package com.example.smu.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.CursoComAlunosDTO;
 import com.example.smu.controller.Dto.CursoDto;
+import com.example.smu.controller.Dto.CursoListaDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Dto.AlunoCursoDto;
 import com.example.smu.model.Dto.DisciplinaCursoDto;
@@ -59,8 +61,11 @@ public class CursoController {
     }
 
     @GetMapping
-    public List<Curso> listarTodos() {
-        return cursoService.listarTodos();
+    public ResponseEntity<List<CursoListaDTO>> listarCursos() {
+        List<Curso> cursos = cursoService.listarTodos();
+
+        List<CursoListaDTO> listaDTO = cursos.stream().map(CursoListaDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(listaDTO);
     }
 
     @PutMapping("/{id}")
@@ -82,7 +87,7 @@ public class CursoController {
     public List<DisciplinaCursoDto> listarDisciplinas(@PathVariable Integer id) {
         return cursoService.listarDisciplinas(id);
     }
-
+    
     @GetMapping("/{id}/monitorias")
     public List<MonitoriaCurso> listarMonitorias(@PathVariable Integer id) {
         return cursoService.listarMonitorias(id);

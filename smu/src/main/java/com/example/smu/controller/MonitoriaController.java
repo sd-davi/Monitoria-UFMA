@@ -1,6 +1,7 @@
 package com.example.smu.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.MonitoriaDto;
+import com.example.smu.controller.Dto.MonitoriaListaDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
 import com.example.smu.model.Monitoria;
@@ -75,10 +77,11 @@ public class MonitoriaController {
     }
 
     // GET: Listar todas as monitorias
-    @GetMapping("/listar")
-    public ResponseEntity<?> listarTudo() {
+    @GetMapping
+    public ResponseEntity<List<MonitoriaListaDTO>> listarMonitorias() {
         List<Monitoria> monitorias = service.listarTodos();
-        return ResponseEntity.ok(monitorias);
+        List<MonitoriaListaDTO> listDTO = monitorias.stream().map(MonitoriaListaDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(listDTO);
     }
 
     // DELETE: Deletar monitoria por ID

@@ -50,7 +50,7 @@ public interface  UsuarioRepository extends JpaRepository<Usuario,Integer>{
     )
     FROM Usuario a
     JOIN a.disciplinas d
-    WHERE a.id =: alunoid
+    WHERE a.id = :alunoid
     """) List<DisciplinaAluno> DisciplinasPorAluno (@Param("alunoid") Integer alunoid);
     
 
@@ -64,7 +64,7 @@ public interface  UsuarioRepository extends JpaRepository<Usuario,Integer>{
     )
     FROM Usuario a
     JOIN a.monitorias m
-    WHERE a.id =: alunoid
+    WHERE a.id = :alunoid
     """) List<MonitoriaAlunoDto> MonitoriasPorAluno (@Param("alunoid") Integer alunoid);
 
     
