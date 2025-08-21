@@ -16,14 +16,18 @@ import lombok.NoArgsConstructor;
 public class AlunosPorDisciplinaDTO {
     private Integer id;
     private String nome;
+    private String curso;
     private Set<DisciplinaDto> disciplinas;
+    private Set<MonitoriaDto> monitorias;
 
     public AlunosPorDisciplinaDTO (Usuario aluno) {
         this.id = aluno.getId();
         this.nome = aluno.getNome();
+        this.curso = aluno.getCurso().getNome();
         // Converte a lista de entidades Disciplina para uma lista de DisciplinaDTO
         this.disciplinas = aluno.getDisciplinas().stream()
                                   .map(DisciplinaDto::new)
                                   .collect(Collectors.toSet());
+        this.monitorias = aluno.getMonitorias().stream().map(MonitoriaDto::new).collect(Collectors.toSet());
     }
 }

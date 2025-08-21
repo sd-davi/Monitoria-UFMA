@@ -1,6 +1,7 @@
 package com.example.smu.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.DisciplinaDto;
+import com.example.smu.controller.Dto.DisciplinaListDTO;
 import com.example.smu.controller.Dto.DisciplinasComAlunosDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
@@ -68,8 +70,11 @@ public class DisciplinaController {
 
     // Listar todas
     @GetMapping
-    public ResponseEntity<List<Disciplina>> listarTodos() {
-        return ResponseEntity.ok(service.listarTodas());
+    public ResponseEntity<List<DisciplinaListDTO>> listarTodos() {
+        List<Disciplina> d = service.listarTodas();
+
+        List<DisciplinaListDTO> disciplinaDTO = d.stream().map(DisciplinaListDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(disciplinaDTO);
     }
 
     // Deletar
