@@ -21,8 +21,8 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     //listas
     List<Monitoria> findByCodigoDisciplina(String codigoDisciplina);
     List<Monitoria> findByDisciplinaContainingIgnoreCase(String disciplina);
-    List<Monitoria> findByMonitor_UsuarioId(Long monitorId);
-    List<Monitoria> findByCurso_CursoId(Long cursoId);
+    List<Monitoria> findByMonitor_UsuarioId(Integer monitorId);
+    List<Monitoria> findByCurso_CursoId(Integer cursoId);
     // sql
 
     // lista de alunos na monitoria
