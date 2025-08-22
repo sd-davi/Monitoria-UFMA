@@ -18,6 +18,11 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     boolean existsById (Integer id);
     void deleteById(Integer id);
 
+    //listas
+    List<Monitoria> findByCodigoDisciplina(String codigoDisciplina);
+    List<Monitoria> findByDisciplinaContainingIgnoreCase(String disciplina);
+    List<Monitoria> findByMonitor_UsuarioId(Long monitorId);
+    List<Monitoria> findByCurso_CursoId(Long cursoId);
     // sql
 
     // lista de alunos na monitoria
@@ -61,19 +66,14 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     """) List<MonitoriaSessaoDto> SessoesPorMonitoria(@Param("monitoriaid") Integer monitoriaid);
 
 
-    // encontrar monitor MonitoriaMonitorDto.java
-/* 
-    @Query("""
-    SELECT new com.example.smu.model.Dto.MonitoriaMonitorDto(
-    m.id,
-    monitor.id,
-    monitor.nome
-    )
-    FROM Monitoria m
-    JOIN m.monitor monitor
-    WHERE m.id = :monitoriaid
-""")
-Optional<MonitoriaMonitorDto> buscarMonitor(@Param("monitoriaid") Integer monitoriaid);*/
+
+    @Query("SELECT m FROM Monitoria m WHERE " +
+            "(:disciplina IS NOT NULL AND LOWER(m.disciplina) LIKE LOWER(CONCAT('%', :disciplina, '%')) " +
+            "OR :monitor IS NOT NULL AND LOWER(m.monitor.nome) LIKE LOWER(CONCAT('%', :monitor, '%')))")
+    List<Monitoria> buscarPorDisciplinaEporMonitor(
+            @Param("disciplina") String disciplina,
+            @Param("monitor") String monitor);
+
 
 
 }
