@@ -206,15 +206,32 @@ public class UsuarioService {
                 .orElseThrow(() -> new UsuarioRunTime("Usuário não encontrado"));
     }
 
+    @Transactional
     public void deletar(Integer id) {
+        VerificarId(id);
         usuarioRepository.deleteById(id);
     }
 
-    public Usuario atualizar(Integer id, Usuario userAtualizado) {
-        Usuario existente = buscarPorId(id);
-        userAtualizado.setId(id); // garantir que será atualizado
-        VerificarUsuario(userAtualizado);
-        return usuarioRepository.save(userAtualizado);
+    @Transactional
+    public Usuario atualizar(Usuario atualizado) {
+        Usuario existente = buscarPorId(atualizado.getId());
+        existente.setNome(atualizado.getNome());
+        existente.setEmail(atualizado.getEmail());
+        existente.setSenha(atualizado.getSenha());
+        existente.setDataNascimento(atualizado.getDataNascimento());
+        existente.setMatricula(atualizado.getMatricula());
+        existente.setTipo(atualizado.getTipo());
+        existente.setCurso(atualizado.getCurso());
+
+        return usuarioRepository.save(existente);
     }
+
+    public boolean existsByMatricula(String matricula) {
+    return usuarioRepository.existsByMatricula(matricula);
+    }
+
+  public boolean existsByEmail(String email) {
+    return usuarioRepository.existsByEmail(email);
+  }
 
 }
