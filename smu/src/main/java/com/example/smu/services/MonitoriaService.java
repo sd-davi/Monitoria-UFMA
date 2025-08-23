@@ -17,6 +17,9 @@ import com.example.smu.model.repository.UsuarioRepository;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
 @Service
 public class MonitoriaService {
 
@@ -62,6 +65,20 @@ public class MonitoriaService {
         monitoria.getAlunos().add(aluno);
         monitoriaRepository.save(monitoria);
     }
+
+    @Transactional
+    public Monitoria atualizarMonitoria(Monitoria monitoria) {
+        Monitoria existente = buscarPorId(monitoria.getId());
+        existente.setNome(monitoria.getNome());
+        existente.setDiasDaSemana(monitoria.getDiasDaSemana());
+        existente.setHorario(monitoria.getHorario());
+        existente.setLink(monitoria.getLink());
+        existente.setMonitor(monitoria.getMonitor());
+        existente.setDisciplina(monitoria.getDisciplina());
+        existente.setCurso(monitoria.getCurso());
+        return monitoriaRepository.save(existente);
+    }
+
     // consulta
     public Monitoria buscarPorId(Integer id) {
         return monitoriaRepository.findById(id)
@@ -104,4 +121,21 @@ public class MonitoriaService {
     return monitoriaRepository.buscarMonitor(monitoriaId)
         .orElseThrow(() -> new MonitoriaRunTime("Monitor não encontrado"));
 }*/
+
+    public List<Monitoria> buscarPorCurso(Integer cursoId) {
+        return monitoriaRepository.findByCurso_CursoId(cursoId);
+    }
+
+    public List<Monitoria> buscarPorMonitor(Integer monitorId) {
+        return monitoriaRepository.findByMonitor_UsuarioId(monitorId);
+    }
+
+    public List<Monitoria> buscarPorCodigoDisciplina(String codigoDisciplina) {
+        return monitoriaRepository.findByCodigoDisciplina(codigoDisciplina);
+    }
+
+    public List<Monitoria> buscarPorParteDisciplina(String disciplina) {
+        return monitoriaRepository.findByDisciplinaContainingIgnoreCase(disciplina);
+    }
+
 }

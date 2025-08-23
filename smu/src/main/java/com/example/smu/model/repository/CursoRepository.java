@@ -19,6 +19,7 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
     Optional<Curso> findById (Integer id);
     boolean existsByNome(String nome);
     boolean existsById(Integer id);
+    Optional<Curso> findByCodigo(String codigo);
     // sql
 
     // listar alunos n0 curso

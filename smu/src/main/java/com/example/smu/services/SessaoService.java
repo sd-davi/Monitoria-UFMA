@@ -1,5 +1,6 @@
 package com.example.smu.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.smu.controller.Dto.SessaoDto;
 import com.example.smu.model.Monitoria;
 import com.example.smu.model.Sessao;
+import com.example.smu.model.StatusSessao;
 import com.example.smu.model.Usuario;
 import com.example.smu.model.repository.MonitoriaRepository;
 import com.example.smu.model.repository.SessaoRepository;
@@ -90,6 +92,35 @@ public class SessaoService {
     }
 
     return sessaoRepository.save(sessao);
-}
+    }
+    @Transactional
+    public Sessao AtualizarStatus (Integer id, StatusSessao status){
+        Sessao sessao =  buscarPorId(id);
+        sessao.setStatus(status);
+        return sessaoRepository.save(sessao);
+    }
+
+    // 
+    public List<Sessao> listarPorAluno(Integer alunoId) {
+        return sessaoRepository.findByAluno_UsuarioId(alunoId);
+    }
+
+    public List<Sessao> listarPorMonitor(Integer monitorId) {
+        return sessaoRepository.findByMonitoria_Monitor_UsuarioId(monitorId);
+    }
+
+    public List<Sessao> listarPorStatus(StatusSessao status) {
+        return sessaoRepository.findByStatus(status);
+    }
+
+    public List<Sessao> listarFuturasPorAluno(Integer alunoId) {
+        return sessaoRepository.findByAluno_UsuarioIdAndDataAfter(alunoId, LocalDateTime.now());
+    }
+
+    public List<Sessao> listarFuturasPorMonitor(Integer monitorId) {
+        return sessaoRepository.findByMonitoria_Monitor_UsuarioIdAndDataAfter(monitorId, LocalDateTime.now());
+    }
 
 }
+
+
