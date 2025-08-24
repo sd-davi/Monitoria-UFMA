@@ -9,12 +9,12 @@ import com.example.smu.model.Avaliacao;
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Integer> {
 
     // Listar todas as avaliações de uma sessão
-    List<Avaliacao> findBySessaoAgendada_SessaoId(Integer sessaoId);
+    List<Avaliacao> findBySessao_Id(Integer sessaoId);
 
     // Listar todas as avaliações feitas por um aluno específico
-    List<Avaliacao> findByAluno_UsuarioId(Integer alunoId);
+    List<Avaliacao> findByAluno_Id(Integer alunoId);
 
     // Calcular a média de estrelas de uma sessão (para uso em service)
     // Exemplo de query derivada para pegar só as estrelas
-    List<Avaliacao> findBySessaoAgendada_SessaoIdAndEstrelasNotNull(Integer sessaoId);
+    List<Avaliacao> findBySessao_IdAndEstrelasNotNull(Integer sessaoId);
 }

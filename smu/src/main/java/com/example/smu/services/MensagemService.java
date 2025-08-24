@@ -1,16 +1,15 @@
 package com.example.smu.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.smu.model.Mensagem;
 import com.example.smu.model.repository.MensagemRepository;
 import com.example.smu.services.exceptions.MensagemRunTime;
-
 
 import jakarta.transaction.Transactional;
 
@@ -40,14 +39,14 @@ public class MensagemService {
 
     //chat
     public List<Mensagem> buscarMensagensPorSessao(Integer sessaoId) {
-        return repository.findBySessaoAgendada_SessaoIdOrderByDataHoraAsc(sessaoId);
+        return repository.findBySessao_IdOrderByHorarioAsc(sessaoId);
     }
 
     /**
      * Busca todas as mensagens de um autor específico em uma sessão.
      */
     public List<Mensagem> buscarMensagensPorAutorNaSessao(Integer sessaoId, Integer autorId) {
-        return repository.findBySessaoAgendada_SessaoIdAndAutor_UsuarioIdOrderByDataHoraAsc(sessaoId, autorId);
+        return repository.findBySessao_IdAndAutor_IdOrderByHorarioAsc(sessaoId, autorId);
     }
 
 

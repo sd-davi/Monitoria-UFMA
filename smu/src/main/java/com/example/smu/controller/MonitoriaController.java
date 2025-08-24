@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.smu.controller.Dto.MonitoriaDto;
 import com.example.smu.controller.Dto.MonitoriaListaDTO;
+import com.example.smu.controller.Dto.MonitoriaResponseDto;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
 import com.example.smu.model.Monitoria;
@@ -58,7 +59,8 @@ public class MonitoriaController {
                     .build();
 
             Monitoria salva = service.cadastrarMonitoria(monitoria);
-            return new ResponseEntity<>(salva, HttpStatus.CREATED);
+            MonitoriaResponseDto dto = toResponseDto(salva);
+            return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
         } catch (MonitoriaRunTime e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -107,5 +109,18 @@ public class MonitoriaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
+    // conversão
+    private MonitoriaResponseDto toResponseDto(Monitoria monitoria) {
+    return MonitoriaResponseDto.builder()
+            .id(monitoria.getId())
+            .nome(monitoria.getNome())
+            .cursoNome(monitoria.getCurso().getNome())
+            .disciplinaNome(monitoria.getDisciplina().getNome())
+            .monitorNome(monitoria.getMonitor().getNome())
+            .build();
+}
+
 }
  

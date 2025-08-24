@@ -17,7 +17,6 @@ import com.example.smu.model.repository.UsuarioRepository;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -123,19 +122,19 @@ public class MonitoriaService {
 }*/
 
     public List<Monitoria> buscarPorCurso(Integer cursoId) {
-        return monitoriaRepository.findByCurso_CursoId(cursoId);
+        return monitoriaRepository.findByCurso_Id(cursoId);
     }
 
     public List<Monitoria> buscarPorMonitor(Integer monitorId) {
-        return monitoriaRepository.findByMonitor_UsuarioId(monitorId);
+        return monitoriaRepository.findByMonitor_Id(monitorId);
     }
 
     public List<Monitoria> buscarPorCodigoDisciplina(String codigoDisciplina) {
-        return monitoriaRepository.findByCodigoDisciplina(codigoDisciplina);
+        return monitoriaRepository.findByDisciplina_CodigoContainingIgnoreCase(codigoDisciplina);
     }
 
     public List<Monitoria> buscarPorParteDisciplina(String disciplina) {
-        return monitoriaRepository.findByDisciplinaContainingIgnoreCase(disciplina);
+        return monitoriaRepository.findByDisciplina_NomeContainingIgnoreCase(disciplina);
     }
 
 }
