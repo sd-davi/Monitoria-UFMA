@@ -66,15 +66,17 @@ public class MonitoriaService {
     }
 
     @Transactional
-    public Monitoria atualizarMonitoria(Monitoria monitoria) {
-        Monitoria existente = buscarPorId(monitoria.getId());
+    public Monitoria atualizarMonitoria(Integer id, Monitoria monitoria) {
+        Monitoria existente = monitoriaRepository.findById(id).
+        orElseThrow(() -> new MonitoriaRunTime("Monitoria não encontrada"));
         existente.setNome(monitoria.getNome());
         existente.setDiasDaSemana(monitoria.getDiasDaSemana());
         existente.setHorario(monitoria.getHorario());
         existente.setLink(monitoria.getLink());
-        existente.setMonitor(monitoria.getMonitor());
-        existente.setDisciplina(monitoria.getDisciplina());
-        existente.setCurso(monitoria.getCurso());
+        if (monitoria.getDisciplina() != null) {
+            existente.setDisciplina(monitoria.getDisciplina());
+        }
+        
         return monitoriaRepository.save(existente);
     }
 

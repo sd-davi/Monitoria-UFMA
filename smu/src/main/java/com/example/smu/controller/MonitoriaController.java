@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.smu.controller.Dto.MonitoriaDto;
 import com.example.smu.controller.Dto.MonitoriaListaDTO;
 import com.example.smu.controller.Dto.MonitoriaResponseDto;
+import com.example.smu.controller.Dto.MonitoriasComAluno;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
 import com.example.smu.model.Monitoria;
@@ -27,6 +29,7 @@ import com.example.smu.services.MonitoriaService;
 import com.example.smu.services.UsuarioService;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
+
 
 @RestController
 @RequestMapping("/api/monitoria")
@@ -66,13 +69,27 @@ public class MonitoriaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // Atualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<?> Atualizar(@PathVariable Integer id, 
+    @RequestBody Monitoria atualizada) {
+        try {
+            Monitoria temp = service.atualizarMonitoria(id, atualizada);
+            MonitoriaListaDTO dto = new MonitoriaListaDTO(temp);
+            return ResponseEntity.ok(dto);
+        } catch (MonitoriaRunTime e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        
+    }
 
     // buscar
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
             Monitoria monitoria = service.buscarPorId(id);
-            return ResponseEntity.ok(monitoria);
+            MonitoriasComAluno dto = new MonitoriasComAluno(monitoria);
+            return ResponseEntity.ok(dto);
         } catch (MonitoriaRunTime e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,6 +90,14 @@ public class UsuarioController {
         } catch (UsuarioRunTime e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+    //Atualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<?> AtualizarCadastro(@PathVariable Integer id, 
+    @RequestBody Usuario atualizado){
+        Usuario temp = service.atualizar(id , atualizado);
+         AlunosPorDisciplinaDTO dto = new AlunosPorDisciplinaDTO(temp);
+        return ResponseEntity.ok(dto);
     }
 
     // Listar todos os usuários

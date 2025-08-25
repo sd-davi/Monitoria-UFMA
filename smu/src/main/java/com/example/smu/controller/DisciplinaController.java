@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,6 +84,19 @@ public class DisciplinaController {
         try {
             service.deletar(id);
             return ResponseEntity.noContent().build();
+        } catch (DisciplinaRunTime e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> Atualizar(@PathVariable Integer id,
+    @RequestBody Disciplina atualizada){
+
+        try {
+            Disciplina temp = service.Atualizar(id, atualizada);
+            DisciplinaDto dto = new DisciplinaDto(temp);
+            return ResponseEntity.ok(dto);
         } catch (DisciplinaRunTime e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
