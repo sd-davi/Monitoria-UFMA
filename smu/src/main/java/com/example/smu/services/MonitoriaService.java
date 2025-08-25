@@ -17,7 +17,6 @@ import com.example.smu.model.repository.UsuarioRepository;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -67,15 +66,17 @@ public class MonitoriaService {
     }
 
     @Transactional
-    public Monitoria atualizarMonitoria(Monitoria monitoria) {
-        Monitoria existente = buscarPorId(monitoria.getId());
+    public Monitoria atualizarMonitoria(Integer id, Monitoria monitoria) {
+        Monitoria existente = monitoriaRepository.findById(id).
+        orElseThrow(() -> new MonitoriaRunTime("Monitoria não encontrada"));
         existente.setNome(monitoria.getNome());
         existente.setDiasDaSemana(monitoria.getDiasDaSemana());
         existente.setHorario(monitoria.getHorario());
         existente.setLink(monitoria.getLink());
-        existente.setMonitor(monitoria.getMonitor());
-        existente.setDisciplina(monitoria.getDisciplina());
-        existente.setCurso(monitoria.getCurso());
+        if (monitoria.getDisciplina() != null) {
+            existente.setDisciplina(monitoria.getDisciplina());
+        }
+        
         return monitoriaRepository.save(existente);
     }
 
@@ -123,19 +124,19 @@ public class MonitoriaService {
 }*/
 
     public List<Monitoria> buscarPorCurso(Integer cursoId) {
-        return monitoriaRepository.findByCurso_CursoId(cursoId);
+        return monitoriaRepository.findByCurso_Id(cursoId);
     }
 
     public List<Monitoria> buscarPorMonitor(Integer monitorId) {
-        return monitoriaRepository.findByMonitor_UsuarioId(monitorId);
+        return monitoriaRepository.findByMonitor_Id(monitorId);
     }
 
     public List<Monitoria> buscarPorCodigoDisciplina(String codigoDisciplina) {
-        return monitoriaRepository.findByCodigoDisciplina(codigoDisciplina);
+        return monitoriaRepository.findByDisciplina_CodigoContainingIgnoreCase(codigoDisciplina);
     }
 
     public List<Monitoria> buscarPorParteDisciplina(String disciplina) {
-        return monitoriaRepository.findByDisciplinaContainingIgnoreCase(disciplina);
+        return monitoriaRepository.findByDisciplina_NomeContainingIgnoreCase(disciplina);
     }
 
 }

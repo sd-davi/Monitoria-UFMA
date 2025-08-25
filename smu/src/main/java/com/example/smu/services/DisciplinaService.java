@@ -14,6 +14,8 @@ import com.example.smu.model.repository.UsuarioRepository;
 import com.example.smu.services.exceptions.DisciplinaRunTime;
 import com.example.smu.services.exceptions.UsuarioRunTime;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class DisciplinaService {
 
@@ -110,4 +112,18 @@ public class DisciplinaService {
     public void deletar(Integer id) {
         disciplinaRepository.deleteById(id);
     }
+
+
+    @Transactional
+    public Disciplina Atualizar(Integer id, Disciplina d){
+
+        Disciplina existente = disciplinaRepository.findById(id)
+        .orElseThrow(() -> new DisciplinaRunTime("Disciplina não encontrada"));
+
+        existente.setNome(d.getNome());
+        existente.setCodigo(d.getCodigo());
+
+        return disciplinaRepository.save(existente);
+    }
+
 }

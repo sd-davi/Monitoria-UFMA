@@ -102,11 +102,11 @@ public class SessaoService {
 
     // 
     public List<Sessao> listarPorAluno(Integer alunoId) {
-        return sessaoRepository.findByAluno_UsuarioId(alunoId);
+        return sessaoRepository.findByAlunos_Id(alunoId);
     }
 
     public List<Sessao> listarPorMonitor(Integer monitorId) {
-        return sessaoRepository.findByMonitoria_Monitor_UsuarioId(monitorId);
+        return sessaoRepository.findByMonitoria_Monitor_Id(monitorId);
     }
 
     public List<Sessao> listarPorStatus(StatusSessao status) {
@@ -114,11 +114,11 @@ public class SessaoService {
     }
 
     public List<Sessao> listarFuturasPorAluno(Integer alunoId) {
-        return sessaoRepository.findByAluno_UsuarioIdAndDataAfter(alunoId, LocalDateTime.now());
+        return sessaoRepository.findByAlunos_IdAndHorarioAfter(alunoId, LocalDateTime.now());
     }
 
     public List<Sessao> listarFuturasPorMonitor(Integer monitorId) {
-        return sessaoRepository.findByMonitoria_Monitor_UsuarioIdAndDataAfter(monitorId, LocalDateTime.now());
+        return sessaoRepository.findByMonitoria_Monitor_IdAndHorarioAfter(monitorId, LocalDateTime.now());
     }
 
 }

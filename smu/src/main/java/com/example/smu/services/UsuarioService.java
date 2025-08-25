@@ -213,15 +213,15 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario atualizar(Usuario atualizado) {
-        Usuario existente = buscarPorId(atualizado.getId());
+    public Usuario atualizar(Integer id, Usuario atualizado) {
+        Usuario existente = usuarioRepository.findById(id)
+        .orElseThrow(() -> new UsuarioRunTime("Usuario não encontrado"));
+
         existente.setNome(atualizado.getNome());
         existente.setEmail(atualizado.getEmail());
         existente.setSenha(atualizado.getSenha());
         existente.setDataNascimento(atualizado.getDataNascimento());
-        existente.setMatricula(atualizado.getMatricula());
         existente.setTipo(atualizado.getTipo());
-        existente.setCurso(atualizado.getCurso());
 
         return usuarioRepository.save(existente);
     }

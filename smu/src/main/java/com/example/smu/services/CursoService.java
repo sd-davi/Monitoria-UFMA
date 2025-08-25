@@ -1,5 +1,10 @@
 package com.example.smu.services;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.smu.model.Curso;
 import com.example.smu.model.Dto.AlunoCursoDto;
 import com.example.smu.model.Dto.DisciplinaCursoDto;
@@ -7,11 +12,6 @@ import com.example.smu.model.Dto.MonitoriaCurso;
 import com.example.smu.model.repository.CursoRepository;
 import com.example.smu.services.exceptions.CursoRunTime;
 import com.example.smu.services.exceptions.MonitoriaRunTime;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CursoService {

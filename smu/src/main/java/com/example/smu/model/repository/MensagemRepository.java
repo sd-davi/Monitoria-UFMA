@@ -9,9 +9,9 @@ import com.example.smu.model.Mensagem;
 public interface MensagemRepository extends JpaRepository<Mensagem, Integer> {
 
     // Listar mensagens de uma sessão em ordem cronológica
-   List<Mensagem> findBySessaoAgendada_SessaoIdOrderByDataHoraAsc(Integer sessaoId);
+   List<Mensagem> findBySessao_IdOrderByHorarioAsc(Integer sessaoId);
 
     // Listar mensagens enviadas por um usuário específico em uma sessão
-    List<Mensagem> findBySessaoAgendada_SessaoIdAndAutor_UsuarioIdOrderByDataHoraAsc(Integer sessaoId, Integer usuarioId);
+    List<Mensagem> findBySessao_IdAndAutor_IdOrderByHorarioAsc(Integer sessaoId, Integer usuarioId);
     
 }

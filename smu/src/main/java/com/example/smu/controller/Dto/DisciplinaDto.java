@@ -22,5 +22,7 @@ public class DisciplinaDto {
     public DisciplinaDto (Disciplina disciplina) {
         this.id = disciplina.getId();
         this.nome = disciplina.getNome();
+        this.codigo = disciplina.getCodigo();
+        
     }
 }

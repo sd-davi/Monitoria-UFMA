@@ -1,11 +1,11 @@
 package com.example.smu.services;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 import com.example.smu.model.Notificacao;
 import com.example.smu.model.repository.NotificacaoRepository;
-
 import com.example.smu.services.exceptions.NotificacaoRunTime;
 
 @Service
@@ -45,7 +45,7 @@ public class NotificacaoService {
     }
 
     public List<Notificacao> listarPorUsuario(Integer usuarioId) {
-        return repository.findByUsuarioDestino_UsuarioId(usuarioId);
+        return repository.findByDestinatario_Id(usuarioId);
     }
 
     

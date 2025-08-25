@@ -1,10 +1,10 @@
 package com.example.smu.services;
+import java.util.List;
+import java.util.OptionalDouble;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.OptionalDouble;
 
 import com.example.smu.model.Avaliacao;
 import com.example.smu.model.repository.AvaliacaoRepository;
@@ -40,15 +40,15 @@ public class AvaliacaoService {
     }
 
     public List<Avaliacao> listarPorSessao(Integer sessaoId) {
-        return repository.findBySessaoAgendada_SessaoId(sessaoId);
+        return repository.findBySessao_Id(sessaoId);
     }
 
     public List<Avaliacao> listarPorAluno(Integer alunoId) {
-        return repository.findByAluno_UsuarioId(alunoId);
+        return repository.findByAluno_Id(alunoId);
     }
 
     public double calcularMediaEstrelasPorSessao(Integer sessaoId) {
-        List<Avaliacao> avaliacoes = repository.findBySessaoAgendada_SessaoIdAndEstrelasNotNull(sessaoId);
+        List<Avaliacao> avaliacoes = repository.findBySessao_IdAndEstrelasNotNull(sessaoId);
 
         OptionalDouble media = avaliacoes.stream()
                 .mapToInt(Avaliacao::getEstrelas)

@@ -19,10 +19,10 @@ public interface MonitoriaRepository extends JpaRepository<Monitoria,Integer> {
     void deleteById(Integer id);
 
     //listas
-    List<Monitoria> findByCodigoDisciplina(String codigoDisciplina);
-    List<Monitoria> findByDisciplinaContainingIgnoreCase(String disciplina);
-    List<Monitoria> findByMonitor_UsuarioId(Integer monitorId);
-    List<Monitoria> findByCurso_CursoId(Integer cursoId);
+    List<Monitoria> findByDisciplina_CodigoContainingIgnoreCase(String codigo);
+    List<Monitoria> findByDisciplina_NomeContainingIgnoreCase(String nome);
+    List<Monitoria> findByMonitor_Id(Integer monitorId);
+    List<Monitoria> findByCurso_Id(Integer cursoId);
     // sql
 
     // lista de alunos na monitoria
