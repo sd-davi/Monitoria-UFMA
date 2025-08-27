@@ -9,7 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "notificacao")
@@ -28,7 +31,7 @@ public class Notificacao {
     private LocalDateTime horario;
 
     @Builder.Default
-    private boolean lida = false;
+    boolean lida = false;
 
     @ManyToOne
     @JoinColumn(name = "destinatario")
