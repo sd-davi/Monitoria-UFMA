@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class NotificacaoResponseDTO {
-    private Long notificacaoId;
+    private Integer notificacaoId;
     private String mensagem;
     private LocalDateTime dataCriacao;
     private boolean lida;
-    private Long usuarioDestinoId;
+    private Integer usuarioDestinoId;
     private String usuarioDestinoNome;
 }

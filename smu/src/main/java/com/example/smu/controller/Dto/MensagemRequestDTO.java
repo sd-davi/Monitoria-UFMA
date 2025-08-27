@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class MensagemRequestDTO {
     private String conteudo;
-    private Long autorId;
-    private Long sessaoId;
+    private Integer autorId;
+    private Integer sessaoId;
 }

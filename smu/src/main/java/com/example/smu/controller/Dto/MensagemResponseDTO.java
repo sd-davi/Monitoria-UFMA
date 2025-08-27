@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class MensagemResponseDTO {
-    private Long mensagemId;
+    private Integer mensagemId;
     private String conteudo;
     private LocalDateTime dataHora;
-    private Long autorId;
+    private Integer autorId;
     private String autorNome;
-    private Long sessaoId;
+    private Integer sessaoId;
 }

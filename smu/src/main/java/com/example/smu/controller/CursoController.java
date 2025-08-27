@@ -73,10 +73,16 @@ public class CursoController {
         return cursoService.atualizarCurso(id, novoCurso);
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public void deletarCurso(@PathVariable Integer id) {
         cursoService.deletarCurso(id);
+    }*/
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCurso(@PathVariable Integer id) {
+        cursoService.deletarCurso(id);
+        return ResponseEntity.noContent().build();
     }
+
 
     @GetMapping("/{id}/alunos")
     public List<AlunoCursoDto> listarAlunos(@PathVariable Integer id) {

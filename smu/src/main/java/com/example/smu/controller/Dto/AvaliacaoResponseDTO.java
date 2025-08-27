@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AvaliacaoResponseDTO {
-    private Long avaliacaoId;
+    private Integer avaliacaoId;
     private Integer estrelas;
     private String comentario;
-    private Long sessaoId;
-    private Long alunoId;
+    private Integer sessaoId;
+    private Integer alunoId;
     private String alunoNome;
 }

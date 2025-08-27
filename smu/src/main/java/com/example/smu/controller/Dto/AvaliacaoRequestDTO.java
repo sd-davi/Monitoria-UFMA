@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class AvaliacaoRequestDTO {
     private Integer estrelas;
     private String comentario;
-    private Long sessaoId;
-    private Long alunoId;
+    private Integer sessaoId;
+    private Integer alunoId;
 }

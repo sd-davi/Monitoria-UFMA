@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class NotificacaoRequestDTO {
     private String mensagem;
-    private Long usuarioDestinoId;
+    private Integer usuarioDestinoId;
 }
