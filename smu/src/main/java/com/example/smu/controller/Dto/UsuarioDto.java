@@ -15,17 +15,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UsuarioDto {
     
-    Integer id;
-    String nome;
-    String email;
-    String senha;
-    LocalDate dataNascimento;
-    String matricula;
-    TipoUsuario tipo;
-    Integer idCurso;
+    private Integer id;
+    private String nome;
+    private String email;
+    private String senha;
+    private LocalDate dataNascimento;
+    private String matricula;
+    private TipoUsuario tipo;
+    private Integer idCurso; 
 
-    public UsuarioDto (Usuario aluno) {
-        this.id = aluno.getId();
-        this.nome = aluno.getNome();
+    public UsuarioDto(Usuario usuario) {
+        this.id = usuario.getId();
+        this.nome = usuario.getNome();
+        this.email = usuario.getEmail();
+        this.tipo = usuario.getTipo();
+        this.matricula = usuario.getMatricula();
+        this.dataNascimento = usuario.getDataNascimento();
+        if (usuario.getCurso() != null) {
+            this.idCurso = usuario.getCurso().getId();
+        }
     }
 }

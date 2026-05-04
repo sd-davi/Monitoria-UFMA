@@ -1,0 +1,15 @@
+# INSTALAR E RODAR ==============================================================================
+mvnw clean install
+ .\mvnw spring-boot:run
+
+npm install
+npm start
+======================================================================================================
+
+# COMANDOS GIT =======================================================================================
+git pull origin main -> baixa os dados do repositorio
+
+git reset --hard
+git pull
+    # força o pull de dados da origem, so use se não tiver problema perder os dados
+======================================================================================================

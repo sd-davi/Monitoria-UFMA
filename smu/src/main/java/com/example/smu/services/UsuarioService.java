@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.smu.controller.Dto.AlunosPorDisciplinaDTO;
 import com.example.smu.model.Curso;
 import com.example.smu.model.Disciplina;
 import com.example.smu.model.Dto.DisciplinaAluno;
@@ -146,15 +147,12 @@ public class UsuarioService {
 
     
     // fazer login
-    public Usuario login(String email, String senha, TipoUsuario tipo) {
+    public Usuario login(String email, String senha) {
         Usuario usuario = usuarioRepository.findByEmail(email)
         .orElseThrow(() -> new IllegalArgumentException("E-mail ou senha inválidos"));
 
         if (!usuario.getSenha().equals(senha)) {
         throw new IllegalArgumentException("E-mail ou senha inválidos");
-        }
-        if (!usuario.getTipo().equals(tipo)) {
-        throw new IllegalArgumentException("Tipo de usuário incorreto");
         }
         return usuario;
     }
@@ -213,18 +211,21 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario atualizar(Integer id, Usuario atualizado) {
-        Usuario existente = usuarioRepository.findById(id)
-        .orElseThrow(() -> new UsuarioRunTime("Usuario não encontrado"));
+public AlunosPorDisciplinaDTO atualizar(Integer id, Usuario atualizado) {
+    Usuario existente = usuarioRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Usuario não encontrado")); // ou seu UsuarioRunTime
 
-        existente.setNome(atualizado.getNome());
-        existente.setEmail(atualizado.getEmail());
-        existente.setSenha(atualizado.getSenha());
-        existente.setDataNascimento(atualizado.getDataNascimento());
-        existente.setTipo(atualizado.getTipo());
+    existente.setNome(atualizado.getNome());
+    existente.setEmail(atualizado.getEmail());
+    existente.setSenha(atualizado.getSenha());
+    existente.setDataNascimento(atualizado.getDataNascimento());
+    existente.setTipo(atualizado.getTipo());
 
-        return usuarioRepository.save(existente);
-    }
+    Usuario salvo = usuarioRepository.save(existente);
+    
+    // A mágica: Como ainda estamos dentro do @Transactional, o Java consegue buscar o Curso e as Disciplinas sem dar erro!
+    return new AlunosPorDisciplinaDTO(salvo);
+}
 
     public boolean existsByMatricula(String matricula) {
     return usuarioRepository.existsByMatricula(matricula);

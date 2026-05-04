@@ -1,5 +1,6 @@
 package com.example.smu.controller.Dto;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,11 +26,13 @@ public class AlunosPorDisciplinaDTO {
         this.id = aluno.getId();
         this.nome = aluno.getNome();
         this.email = aluno.getEmail();
-        this.curso = aluno.getCurso().getNome();
+        //this.curso = aluno.getCurso().getNome();
+        this.curso = aluno.getCurso() != null ? aluno.getCurso().getNome() : "Sem curso vinculado";
         // Converte a lista de entidades Disciplina para uma lista de DisciplinaDTO
-        this.disciplinas = aluno.getDisciplinas().stream()
-                                  .map(DisciplinaDto::new)
-                                  .collect(Collectors.toSet());
+        this.disciplinas = aluno.getDisciplinas() != null 
+    ? aluno.getDisciplinas().stream().map(DisciplinaDto::new).collect(Collectors.toSet()) 
+    : new HashSet<>();
+        //this.disciplinas = aluno.getDisciplinas().stream().map(DisciplinaDto::new).collect(Collectors.toSet());
         this.monitorias = aluno.getMonitorias().stream().map(MonitoriaDto::new).collect(Collectors.toSet());
     }
 }

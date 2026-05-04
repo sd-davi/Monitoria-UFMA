@@ -1,0 +1,6 @@
+.bg-fundo { background-color: #f8f9fa; min-height: 100vh; }
+.sidebar { min-height: calc(100vh - 70px); background-color: white; border-right: 1px solid #dee2e6; }
+.nav-link { color: #495057; font-weight: 500; margin-bottom: 5px; border-radius: 8px; }
+.nav-link:hover { background-color: #f1f3f5; color: #0d6efd; }
+.nav-link.active { background-color: #e7f1ff; color: #0d6efd; }
+.area-monitor { display: none; } 
