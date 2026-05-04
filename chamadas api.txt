@@ -1,0 +1,50 @@
+POST http://localhost:8080/api/usuario/salvar
+
+        {
+        "nome": "Davi",
+        "email": "Davi@gmail.com",
+        "senha": "123456",
+        "dataNascimento": "2000-05-15",
+        "matricula": "20251234",
+        "tipo": "ALUNO",
+        "idCurso": 4
+        }
+    # http://localhost:8080/api/usuario/salvar?tokenMonitor=MONITOR123
+
+            {
+            "nome": "Maria Oliveira",
+            "email": "maria.oliveira@example.com",
+            "senha": "654321",
+            "dataNascimento": "1999-09-20",
+            "matricula": "20251002",
+            "tipo": "MONITOR",
+            "idCurso": 4
+            }
+            
+POST http://localhost:8080/api/disciplina/salvar
+        {
+        "nome": "Estrutura de dados",
+        "codigo": "DEIN005",
+        "idCurso" : 4
+        }
+
+POST http://localhost:8080/api/curso/salvar
+        {
+            "nome": "Enfermagem",
+            "codigo": "ENF"
+        }
+
+
+PUT  http://localhost:8080/api/monitoria/1
+
+        {
+                "nome": "Monitoria de Linguagem de Programação 01",
+                "diasDaSemana": "Terça e Quinta",
+                "horario": "14:00:00",
+                "link": "https://meet.google.com/estruturas",
+                "disciplina": {
+                        "id": 1
+                        }
+        }
+
+

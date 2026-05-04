@@ -20,4 +20,5 @@ public class UsuarioResponseDTO {
     private TipoUsuario tipoUsuario;
     private Integer cursoId;
     private String cursoNome;
+    private String disciplina;
 }

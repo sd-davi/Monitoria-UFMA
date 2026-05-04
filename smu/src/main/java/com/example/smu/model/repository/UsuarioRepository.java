@@ -60,10 +60,14 @@ public interface  UsuarioRepository extends JpaRepository<Usuario,Integer>{
     a.id,
     a.nome,
     m.id,
-    m.nome
+    m.nome,
+    d.nome,
+    u.nome
     )
     FROM Usuario a
     JOIN a.monitorias m
+    LEFT JOIN m.disciplina d
+    LEFT JOIN m.monitor u
     WHERE a.id = :alunoid
     """) List<MonitoriaAlunoDto> MonitoriasPorAluno (@Param("alunoid") Integer alunoid);
 

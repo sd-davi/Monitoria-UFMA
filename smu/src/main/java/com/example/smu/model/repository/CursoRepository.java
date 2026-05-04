@@ -48,17 +48,21 @@ public interface  CursoRepository extends JpaRepository<Curso,Integer> {
 List<DisciplinaCursoDto> DisciplinasPorCurso(@Param("cursoid") Integer cursoid);
 
 
-    // lista de monitorias disponiveis
+// lista de monitorias disponiveis
     
 
     @Query("""
     SELECT new com.example.smu.model.Dto.MonitoriaCurso(
     c.id,
     m.id,
-    m.nome
+    m.nome,
+    d.nome,
+    u.nome
     )
     FROM Curso c
     JOIN c.monitorias m
+    LEFT JOIN m.disciplina d
+    LEFT JOIN m.monitor u
     WHERE c.id = :cursoid
     """) List<MonitoriaCurso> monitoriaPorCurso(@Param("cursoid") Integer cursoid);
      

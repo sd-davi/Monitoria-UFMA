@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MonitoriaListaDTO {
+    private Integer id;
     private String nome;
     private String monitor;
     private String disciplina;
@@ -16,6 +17,7 @@ public class MonitoriaListaDTO {
 
 
     public MonitoriaListaDTO(Monitoria m){
+        this.id = m.getId(); 
         this.nome  = m.getNome();
         this.monitor = m.getMonitor().getNome();
         this.disciplina = m.getDisciplina().getNome();

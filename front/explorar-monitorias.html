@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorar Monitorias - Sistema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .bg-fundo { background-color: #f8f9fa; min-height: 100vh; }
+        .search-bar { border-radius: 30px; padding-left: 20px; border: 1px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card-monitoria { transition: transform 0.2s; cursor: pointer; }
+        .card-monitoria:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+        .badge-curso { background-color: #e9ecef; color: #495057; }
+    </style>
+</head>
+<body class="bg-fundo">
+
+    <nav class="navbar navbar-light bg-white shadow-sm py-3 mb-4">
+        <div class="container d-flex align-items-center">
+            <a href="home.html" class="btn btn-light me-3"><i class="bi bi-arrow-left"></i> Voltar</a>
+            
+            <div class="input-group w-50 mx-auto">
+                <input type="text" class="form-control search-bar" placeholder="Buscar por disciplina, curso ou monitor...">
+                <button class="btn btn-primary" style="border-radius: 0 30px 30px 0; padding: 0 20px;">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Monitorias Disponíveis</h2>
+            
+            <select class="form-select w-auto shadow-sm">
+                <option selected>Todos os Cursos</option>
+                <option value="1">Ciência da Computação</option>
+                <option value="2">Enfermagem</option>
+            </select>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm card-monitoria">
+                    <div class="card-body">
+                        <span class="badge badge-curso mb-2">Ciência da Computação</span>
+                        <h5 class="card-title fw-bold text-primary">Linguagem de Programação</h5>
+                        <p class="card-text text-muted small">Monitor: Maria Silva</p>
+                        <p class="card-text">Revisão completa de Java, Spring Boot e Orientação a Objetos. Encontros focados em prática.</p>
+                        
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center small text-muted mb-3">
+                            <span><i class="bi bi-calendar-event"></i> Terças e Quintas</span>
+                            <span><i class="bi bi-clock"></i> 14:00 - 16:00</span>
+                        </div>
+                        <a href="detalhes-monitoria.html" class="btn btn-outline-success w-100 fw-bold">Inscrever-se</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm card-monitoria">
+                    <div class="card-body">
+                        <span class="badge badge-curso mb-2">Enfermagem</span>
+                        <h5 class="card-title fw-bold text-primary">Anatomia Humana</h5>
+                        <p class="card-text text-muted small">Monitor: Pedro Santos</p>
+                        <p class="card-text">Estudo aprofundado do sistema nervoso central e periférico com uso de modelos anatômicos 3D.</p>
+                        
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center small text-muted mb-3">
+                            <span><i class="bi bi-calendar-event"></i> Quartas-feiras</span>
+                            <span><i class="bi bi-clock"></i> 09:00 - 11:00</span>
+                        </div>
+                        <button class="btn btn-outline-success w-100 fw-bold">Inscrever-se</button>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </div>
+
+</body>
+</html>

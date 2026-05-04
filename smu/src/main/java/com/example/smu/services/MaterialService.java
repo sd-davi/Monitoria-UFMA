@@ -38,9 +38,7 @@ public class MaterialService {
 
     // 4. Listar todos os materiais de uma monitoria
     public List<Material> listarMateriaisPorMonitoria(Integer monitoriaId) {
-        return materialRepository.findAll().stream()
-            .filter(m -> m.getMonitoria().getId().equals(monitoriaId))
-            .toList();
+        return materialRepository.findByMonitoria_Id(monitoriaId);
     }
 
     // 5. Atualizar material

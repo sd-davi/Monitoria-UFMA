@@ -1,6 +1,8 @@
 package com.example.smu.controller.Dto;
 
 
+import java.time.LocalTime;
+
 import com.example.smu.model.Monitoria;
 
 import lombok.AllArgsConstructor;
@@ -16,9 +18,13 @@ public class MonitoriaDto {
 
     Integer id;
     String nome;
+    String descricao;
     Integer idMonitor;
     Integer idCurso;
     Integer idDisciplina;
+    String diasDaSemana;
+    LocalTime horario; 
+    String link;
 
     public MonitoriaDto (Monitoria monitoria) {
         this.id = monitoria.getId();

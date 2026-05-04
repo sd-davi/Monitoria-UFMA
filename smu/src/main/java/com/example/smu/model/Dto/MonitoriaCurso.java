@@ -13,10 +13,16 @@ public class MonitoriaCurso {
     Integer monitoriaId;
     String monitoriaNome;
     Integer cursoId;
+    String nomeMonitor;
+    String nomeDisciplina;
 
-    public MonitoriaCurso(Integer cursoId, Integer monitoriaId, String monitoriaNome) {
+
+    public MonitoriaCurso(Integer cursoId, Integer monitoriaId, String monitoriaNome, 
+                          String nomeDisciplina, String nomeMonitor) {
         this.cursoId = cursoId;
         this.monitoriaId = monitoriaId;
         this.monitoriaNome = monitoriaNome;
+        this.nomeDisciplina = nomeDisciplina;
+        this.nomeMonitor = nomeMonitor;
     }
 }

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Sistema de Monitorias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        #wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #menuLateral {
+            min-height: 100vh;
+            width: 260px;
+            /* Largura normal */
+            transition: width 0.3s ease;
+            /* Agora animamos a LARGURA */
+            overflow: hidden;
+            /* Não deixa o texto vazar para o lado */
+            white-space: nowrap;
+            /* Impede o texto de quebrar linha ao encolher */
+        }
+
+        /* Quando o botão for clicado, ele encolhe para 70px */
+        #wrapper.menu-colapsado #menuLateral {
+            width: 70px;
+        }
+
+        /* Animação para sumir com o texto suavemente */
+        #menuLateral .texto-menu {
+            transition: opacity 0.2s ease;
+            opacity: 1;
+        }
+
+        #wrapper.menu-colapsado .texto-menu {
+            opacity: 0;
+            pointer-events: none;
+            /* Evita que o texto invisível seja clicável */
+        }
+
+        /* Estética dos links */
+        .link-menu {
+            color: #0d6efd;
+            border: none;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            /* Centraliza ícone e texto verticalmente */
+        }
+
+        .link-menu:hover {
+            background-color: #e9f2ff;
+            color: #0a58ca;
+        }
+
+        .link-menu i {
+            font-size: 1.3rem;
+            min-width: 30px;
+            /* Trava a largura do ícone para eles ficarem perfeitamente alinhados */
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    -->
+    <div class="d-flex" id="wrapper">
+
+        <div class="bg-white border-end border-primary border-opacity-25" id="menuLateral">
+            <div class="p-3 d-flex align-items-center mt-2">
+                <button class="btn btn-outline-primary border-0 me-3" id="botaoMenuToggle"
+                    style="font-size: 1.5rem; padding: 0 10px;">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+            <div class="list-group list-group-flush mt-3">
+                <a href="home.html" class="list-group-item list-group-item-action link-menu">
+                    <i class="bi bi-house"></i>
+                    <span class="texto-menu ms-2">Início</span>
+                </a>
+                <a onclick="listarMonitoriasParaAluno()"
+                    class="nav-link list-group-item list-group-item-action link-menu">
+                    <i class="bi bi-search"></i>
+                    <span class="texto-menu ms-2">Explorar Monitorias</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action link-menu">
+                    <i class="bi bi-journal-bookmark"></i>
+                    <span class="texto-menu ms-2">Minhas Aulas</span>
+                </a>
+                <div id="menu-monitor" class="area-monitor">
+                    <a href="criar-monitoria.html" class="list-group-item list-group-item-action link-menu">
+                        <i class="bi bi-plus-circle"></i>
+                        <span class="texto-menu ms-2">Criar Monitoria</span>
+                    </a>
+
+                    <a href="gerenciar-monitoria.html" class="list-group-item list-group-item-action link-menu">
+                        <i class="bi bi-gear"></i>
+                        <span class="texto-menu ms-2">Gerenciar Monitoria</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="conteudoPagina" class="flex-grow-1 w-100">
+            <nav class="navbar navbar-light bg-white border-bottom border-primary border-opacity-25 px-3 mb-4">
+                <div class="d-flex align-items-center w-100">
+                    <i class="bi bi-mortarboard-fill text-primary fs-3 ms-1"></i>
+                    <span class="texto-menu text-primary fw-bold ms-3 border-0 me-3"
+                        style="font-size: 0.9rem; letter-spacing: 1px;">
+                        SMU
+                    </span>
+
+                    <form class="d-flex flex-grow-1" style="max-width: 500px;">
+                        <input class="form-control border-primary border-opacity-50 text-primary placeholder-glow"
+                            type="search" placeholder="Encontrar monitoria" aria-label="Search">
+                    </form>
+
+                    <div class="d-flex align-items-center ms-auto"> <span class="text-primary me-3 mb-0">Olá, <b
+                                id="nomeUsuario">Carregando...</b></span>
+
+                        <a href="perfil.html" class="btn btn-primary btn-sm fw-bold me-2">
+                            <i class="bi bi-person-fill me-1"></i> Perfil
+                        </a>
+
+                        <button onclick="sair()" class="btn btn-outline-primary btn-sm fw-bold me-3">Sair</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4">
+                <h4 class="fw-bold mb-4 mt-3">Bem-vindo(a) ao seu painel!</h4>
+                <h5 class="fw-bold text-muted mb-3" id="tituloSecaoCursos">Carregando suas salas...</h5>
+                <div class="row g-4" id="containerCards">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    -->
+</body>
+<script src="js/home.js"></script>
+<script>
+    const botaoMenu = document.getElementById('botaoMenuToggle');
+    const wrapper = document.getElementById('wrapper');
+
+    botaoMenu.addEventListener('click', function (e) {
+        e.preventDefault();
+        wrapper.classList.toggle('menu-colapsado');
+    });
+</script>
+
+</html>

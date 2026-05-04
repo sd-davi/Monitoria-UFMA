@@ -86,13 +86,6 @@ public class MonitoriaService {
                 .orElseThrow(() -> new MonitoriaRunTime("Monitoria não encontrada"));
     }
 
-    public void deletarPorId(Integer id) {
-        if (!monitoriaRepository.existsById(id)) {
-            throw new MonitoriaRunTime("Monitoria inválida");
-        }
-        monitoriaRepository.deleteById(id);
-    }
-
     private void VerificarId(Integer id){
         if (! monitoriaRepository.existsById(id)){
             throw new MonitoriaRunTime("Monitoria não existe");
@@ -137,6 +130,41 @@ public class MonitoriaService {
 
     public List<Monitoria> buscarPorParteDisciplina(String disciplina) {
         return monitoriaRepository.findByDisciplina_NomeContainingIgnoreCase(disciplina);
+    }
+
+
+    @Transactional
+    public void removerAlunoDaMonitoria(Integer idMonitoria, Integer idAluno) {
+        Monitoria monitoria = monitoriaRepository.findById(idMonitoria)
+                .orElseThrow(() -> new MonitoriaRunTime("Monitoria não encontrada"));
+
+        Usuario aluno = usuarioRepository.findById(idAluno)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        // Remove a monitoria da lista do aluno (Dono da relação)
+        aluno.getMonitorias().remove(monitoria); 
+        
+        // Remove o aluno da lista da monitoria (Lado inverso)
+        monitoria.getAlunos().remove(aluno);
+
+        // Salva o aluno para persistir a mudança na tabela intermediária
+        usuarioRepository.save(aluno); 
+    }
+
+    @Transactional
+    public void deletarPorId(Integer id) {
+        // Substitua a sua função deletarPorId antiga por esta nova versão
+        Monitoria monitoria = monitoriaRepository.findById(id)
+                .orElseThrow(() -> new MonitoriaRunTime("Monitoria inválida"));
+
+        // 1. Limpa o vínculo em cada aluno antes de deletar
+        for (Usuario aluno : monitoria.getAlunos()) {
+            aluno.getMonitorias().remove(monitoria);
+            usuarioRepository.save(aluno);
+        }
+
+        // 2. Agora o banco permite deletar a monitoria sem erro de chave estrangeira
+        monitoriaRepository.deleteById(id);
     }
 
 }

@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +42,9 @@ public class Monitoria {
     @Column
     private LocalTime horario;
 
+    @Column(name = "descricao", length = 500)
+    private String descricao;
+
     private String link;
     // curso
     @ManyToOne
@@ -48,9 +52,11 @@ public class Monitoria {
     Curso curso;
 
     //sessões
-    @OneToMany(mappedBy = "monitoria")
+    
+    @OneToMany(mappedBy = "monitoria", cascade= CascadeType.ALL, orphanRemoval=true)
     @Builder.Default
     Set<Sessao> sessoes = new HashSet<>();
+    
     // disciplina
     @ManyToOne
     @JoinColumn(name="disciplina_id")
@@ -66,7 +72,7 @@ public class Monitoria {
     @Builder.Default
     Set <Usuario> alunos =  new HashSet<>();;
 
-    @OneToMany(mappedBy = "monitoria")
+    @OneToMany(mappedBy = "monitoria", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     Set<Material> materiais = new HashSet<>();;
     
